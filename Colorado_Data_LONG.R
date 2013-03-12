@@ -42,7 +42,3 @@ Colorado_Data_LONG$VALID_CASE <- as.character(Colorado_Data_LONG$VALID_CASE)
 ### Save the result
 
 save(Colorado_Data_LONG, file="Data/Colorado_Data_LONG.Rdata")
-
-
-
-
