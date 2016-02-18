@@ -10,8 +10,6 @@
 require(data.table)
 require(SGP)
 
-setwd('/media/Data/Dropbox/SGP/Colorado')
-
 ###    Load Data
 
 Colorado_Data_LONG_2015 <- fread("Data/Base_Files/PARCC_2015_Longfile.csv", 
