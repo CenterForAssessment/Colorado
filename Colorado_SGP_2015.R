@@ -25,6 +25,7 @@ COLO_2015.config <- c(
 		MATHEMATICS_2015.config,
 		ELA_2015.config)
 
+SGPstateData[["CO"]][["SGP_Configuration"]][["return.norm.group.scale.scores"]] <- TRUE
 
 ### updateSGP
 
@@ -32,7 +33,7 @@ Colorado_SGP <- updateSGP(
 		what_sgp_object=Colorado_SGP,
 		with_sgp_data_LONG=Colorado_Data_LONG_2015,
 		sgp.config = COLO_2015.config,
-		steps=c("prepareSGP", "analyzeSGP", "combineSGP", "outputSGP"), #summarizeSGP
+		steps=c("prepareSGP", "analyzeSGP", "combineSGP", "summarizeSGP", "outputSGP"),
 		sgp.percentiles = TRUE,
 		sgp.projections = TRUE,
 		sgp.projections.lagged = TRUE,
@@ -43,16 +44,9 @@ Colorado_SGP <- updateSGP(
 		simulate.sgps = FALSE,
 		goodness.of.fit.print=TRUE,
 		save.intermediate.results=FALSE,
-		outputSGP.output.type=c("LONG_Data", "LONG_FINAL_YEAR_Data"),
-		parallel.config = list(BACKEND="PARALLEL", WORKERS=list(PERCENTILES=20, PROJECTIONS=10, LAGGED_PROJECTIONS=10))) # Ubuntu/Linux
+		outputSGP.output.type=c("LONG_Data", "LONG_FINAL_YEAR_Data", "WIDE_Data"),
+		parallel.config = list(BACKEND="PARALLEL", WORKERS=list(PERCENTILES=20, PROJECTIONS=10, LAGGED_PROJECTIONS=10, SUMMARY=20))) # Ubuntu/Linux
 
 
-###  Summarize Results
-Colorado_SGP <- summarizeSGP(
-	Colorado_SGP,
-	parallel.config=list(
-		# BACKEND="PARALLEL",
-		BACKEND="FOREACH", TYPE="doParallel", SNOW_TEST=TRUE, 
-		WORKERS=list(SUMMARY=5))
-)
-
+###  Save 2015 Colorado SGP object
+save(Colorado_SGP, file="Data/Colorado_SGP.Rdata")
