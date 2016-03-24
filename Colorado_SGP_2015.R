@@ -15,6 +15,9 @@ require(data.table)
 load("Data/Colorado_SGP.Rdata")
 load("Data/Colorado_Data_LONG_2015.Rdata")
 
+###  Use PARCC Scale Score as "official" Score/SGP per Marie 3/21/16
+setnames(Colorado_Data_LONG_2015, c("SCALE_SCORE", "SCALE_SCORE_ACTUAL"), c("THETA_SCORE", "SCALE_SCORE"))
+
 
 ###  Read in 2015 SGP Configuration Scripts and Combine
 
@@ -24,6 +27,9 @@ source("/media/Data/Dropbox/Github_Repos/Projects/Colorado/SGP_CONFIG/2015/MATHE
 COLO_2015.config <- c(
 		MATHEMATICS_2015.config,
 		ELA_2015.config)
+
+###  Winnow out all course progressions with fewer than 2,000 kids (per discussion on 3/14/16)
+SGPstateData[["CO"]][["SGP_Configuration"]][["sgp.cohort.size"]] <- 2000
 
 SGPstateData[["CO"]][["SGP_Configuration"]][["return.norm.group.scale.scores"]] <- TRUE
 

@@ -84,6 +84,10 @@ save(Colorado_Data_LONG_2015, file="Data/Colorado_Data_LONG_2015.Rdata")
 #  Use @Data from outputSGP in 2014 TCAP analyses as the base for the new object
 load("Data/Archive/February_2016/Colorado_SGP_LONG_Data.Rdata")
 
+#  Invalidate Schools from cheating incidents (via Marie 3/17/2016)
+Colorado_SGP_LONG_Data[which(YEAR=='2012' & SCHOOL_NUMBER=='4836' & DISTRICT_NUMBER=='0550'), VALID_CASE := "INVALID_CASE"]
+Colorado_SGP_LONG_Data[which(YEAR=='2013' & SCHOOL_NUMBER=='5896' & DISTRICT_NUMBER=='3110'), VALID_CASE := "INVALID_CASE"]
+
 Colorado_LONG_Data <- Colorado_SGP_LONG_Data[VALID_CASE == "VALID_CASE" & YEAR %in% 2012:2014]
 
 #  Remove all BASELINE SGP related variables
