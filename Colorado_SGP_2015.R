@@ -39,7 +39,7 @@ Colorado_SGP <- updateSGP(
 		what_sgp_object=Colorado_SGP,
 		with_sgp_data_LONG=Colorado_Data_LONG_2015,
 		sgp.config = COLO_2015.config,
-		steps=c("prepareSGP", "analyzeSGP", "combineSGP", "summarizeSGP", "outputSGP"),
+		steps=c("prepareSGP", "analyzeSGP", "combineSGP", "outputSGP"),
 		sgp.percentiles = TRUE,
 		sgp.projections = TRUE,
 		sgp.projections.lagged = TRUE,
@@ -54,5 +54,32 @@ Colorado_SGP <- updateSGP(
 		parallel.config = list(BACKEND="PARALLEL", WORKERS=list(PERCENTILES=20, PROJECTIONS=10, LAGGED_PROJECTIONS=10, SUMMARY=20))) # Ubuntu/Linux
 
 
+### Fill in ACHIEVEMENT_LEVEL_PRIOR for ELA -- WRITING was the test specified as first prior...
+for (pg in 3:10) {
+	Colorado_SGP@Data[which(CONTENT_AREA=="ELA" & YEAR=='2015' & GRADE==pg+1 & VALID_CASE=="VALID_CASE"), 
+		ACHIEVEMENT_LEVEL_PRIOR := ordered(findInterval(as.numeric(SCALE_SCORE_PRIOR), 
+			SGPstateData[["CO"]][["Achievement"]][["Cutscores"]][["WRITING"]][[paste("GRADE", ng, sep="_")]]), 
+			labels=c("Unsatisfactory", "Partially Proficient", "Proficient", "Advanced"))]
+}
+
+
+
+
+###  Summarize Results
+Colorado_SGP <- summarizeSGP(
+	Colorado_SGP,
+	parallel.config=list(
+		BACKEND="FOREACH", TYPE="doParallel", SNOW_TEST=TRUE, 
+		WORKERS=list(SUMMARY=10))
+)
+
+
+visualizeSGP(Colorado_SGP,
+	plot.types = "bubblePlot",
+	bPlot.years=  "2015",
+	bPlot.content_areas=GL_subjects,
+	bPlot.anonymize=TRUE)
+
 ###  Save 2015 Colorado SGP object
 save(Colorado_SGP, file="Data/Colorado_SGP.Rdata")
+
