@@ -27,6 +27,7 @@ Colorado_Data_LONG_2016 <- Colorado_Data_2016_Orig[Colorado_Data_2016_Adj[, list
 
 #  Convert SCALE_SCORE variable to numeric
 Colorado_Data_LONG_2016[, SCALE_SCORE := as.numeric(SCALE_SCORE)]
+Colorado_Data_LONG_2016[, SCALE_SCORE_ADJUSTED := as.numeric(SCALE_SCORE_ADJUSTED)]
 
 #  Convert YEAR to match PARCC conventions
 Colorado_Data_LONG_2016[which(YEAR=="2015"), YEAR := "2014_2015.2"]
