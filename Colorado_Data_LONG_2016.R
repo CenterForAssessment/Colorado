@@ -1,4 +1,3 @@
-
 #############################################################################################
 ###
 ### Prep file for 2016 Colorado LONG data
@@ -12,7 +11,7 @@ require(SGP)
 
 ###    Load Data
     
-Colorado_Data_2016_Adj <- fread("Data/Base_Files/Colorado_SGP_LONG_Data_2015-16 AdjustedSS.csv", 
+Colorado_Data_2016_Adj <- fread("Data/Base_Files/Colorado_SGP_LONG_Data_2015-16_AdjSS_ELAg3only_readin.csv", 
 					sep=',', header=TRUE, colClasses=rep("character", 28))
 setkey(Colorado_Data_2016_Adj, VALID_CASE, ID, FPRC_SUMM_SCORE_REC_UUID, CONTENT_AREA, YEAR)
 setnames(Colorado_Data_2016_Adj, "SCALE_SCORE", "SCALE_SCORE_ADJUSTED")
@@ -33,12 +32,12 @@ Colorado_Data_LONG_2016[, SCALE_SCORE_ADJUSTED := as.numeric(SCALE_SCORE_ADJUSTE
 Colorado_Data_LONG_2016[which(YEAR=="2015"), YEAR := "2014_2015.2"]
 Colorado_Data_LONG_2016[which(YEAR=="2016"), YEAR := "2015_2016.2"]
 
-#  Convert CONTENT_AREA to match PARCC conventions
-Colorado_Data_LONG_2016[, CONTENT_AREA := paste0(CONTENT_AREA, "_SS")]
-
 #  Convert EOCT Grade levels to "EOCT"
 Colorado_Data_LONG_2016[, GRADE_REPORTED := GRADE]
 Colorado_Data_LONG_2016[which(CONTENT_AREA %in% c("ALGEBRA_I", "ALGEBRA_II", "GEOMETRY", "INTEGRATED_MATH_1", "INTEGRATED_MATH_2", "INTEGRATED_MATH_3")), GRADE := "EOCT"]
+
+#  Convert CONTENT_AREA to match PARCC conventions
+Colorado_Data_LONG_2016[, CONTENT_AREA := paste0(CONTENT_AREA, "_SS")]
 
 #  Convert names to factors (temporary to change levels vs values for time/memory saving)
 Colorado_Data_LONG_2016[, DISTRICT_NAME := factor(DISTRICT_NAME)]
