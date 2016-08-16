@@ -50,15 +50,15 @@ Colorado_SGP <- abcSGP(
 		parallel.config = list(BACKEND="PARALLEL", WORKERS=list(PERCENTILES=20, PROJECTIONS=10, LAGGED_PROJECTIONS=10, SUMMARY=20))) # Ubuntu/Linux
 
 ###  Rename First set of SGPs / SGP related variables
-setnames(Colorado_SGP@Data, gsub("SGP", "SGP_ORIG", names(Colorado_SGP@Data)))
-
-###  Rename SCALE_SCORE
-setnames(Colorado_SGP@Data, c("SCALE_SCORE", "SCALE_SCORE_ADJUSTED"), c("SCALE_SCORE_ORIGINAL", "SCALE_SCORE"))
+# setnames(Colorado_SGP@Data, gsub("SGP", "SGP_ORIG", names(Colorado_SGP@Data)))
 
 ###  Re-run abcSGP using Colorado_SGP object
 
-Colorado_SGP <- abcSGP(
-		sgp_object=Colorado_SGP,
+###  Rename SCALE_SCORE
+setnames(Colorado_Data_LONG_2016, c("SCALE_SCORE", "SCALE_SCORE_ADJUSTED"), c("SCALE_SCORE_ORIGINAL", "SCALE_SCORE"))
+
+Colorado_SGP_SS_Adj <- abcSGP(
+		sgp_object=Colorado_Data_LONG_2016,
 		sgp.config = COLO_2016.config,
 		steps=c("prepareSGP", "analyzeSGP", "combineSGP"), # "summarizeSGP", "outputSGP"
 		sgp.percentiles = TRUE,
@@ -72,8 +72,11 @@ Colorado_SGP <- abcSGP(
 		outputSGP.output.type=c("LONG_Data", "LONG_FINAL_YEAR_Data", "WIDE_Data"),
 		parallel.config = list(BACKEND="PARALLEL", WORKERS=list(PERCENTILES=20))) # Ubuntu/Linux
 
-table(Colorado_SGP@Data[, is.na(SGP), is.na(SGP_ORIG)])
-Colorado_SGP@Data[!is.na(SGP), list(R=cor(SGP, SGP_ORIG, use='complete')), keyby=c("CONTENT_AREA", "GRADE")]
+table(is.na(Colorado_SGP@Data$SGP), is.na(Colorado_SGP_SS_Adj@Data$SGP))
+
+###  Add in the Adjusted SGP variable:
+Colorado_SGP@Data[, SGP_ADJ := Colorado_SGP_SS_Adj@Data$SGP]
+Colorado_SGP@Data[!is.na(SGP), list(R=cor(SGP, SGP_ADJ, use='complete')), keyby=c("CONTENT_AREA", "GRADE")]
 
 ###  Save 2016 Colorado SGP object
 save(Colorado_SGP, file="Data/Colorado_SGP.Rdata")
