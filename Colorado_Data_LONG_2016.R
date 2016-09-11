@@ -11,8 +11,8 @@ require(SGP)
 
 ###    Load Data
     
-Colorado_Data_2016_Adj <- fread("Data/Base_Files/Colorado_SGP_LONG_Data_2015-16_AdjSS_ELAg3only_readin.csv", 
-					sep=',', header=TRUE, colClasses=rep("character", 28))
+Colorado_Data_2016_Adj <- fread("Data/Base_Files/Colorado_SGP_LONG_Data_2015-16_AdjSS_ContinuousUpdate.csv", 
+					sep=',', header=TRUE, colClasses=rep("character", 29))
 setkey(Colorado_Data_2016_Adj, VALID_CASE, ID, FPRC_SUMM_SCORE_REC_UUID, CONTENT_AREA, YEAR)
 setnames(Colorado_Data_2016_Adj, "SCALE_SCORE", "SCALE_SCORE_ADJUSTED")
 
