@@ -74,9 +74,44 @@ Colorado_SGP <- summarizeSGP(
 ###    Visualize Results
 ###
 
+
 visualizeSGP(Colorado_SGP,
 	plot.types = "bubblePlot",
 	bPlot.years=  "2015_2016.2",
 	# bPlot.content_areas=c("ELA_SS", "MATHEMATICS_SS", "ALGEBRA_I_SS", "GEOMETRY_SS", "ALGEBRA_II_SS"),
 	bPlot.anonymize=TRUE)
+
+
+###
+###  Student growth plots
+###
+
+###  Need to get rid of the '.2' usage in year  --  causes problems with pdflatex creation of school catalogs/files
+
+Colorado_SGP@Data[, YEAR := gsub("[.]2", "", YEAR)]
+names(Colorado_SGP@SGP$SGProjections) <- gsub("2015_2016.2", "2015_2016", names(Colorado_SGP@SGP$SGProjections))
+
+###  Null out MATHEMATICS_INTGRT_SS projections manually - want it to calculate the projections (in case ever needed), but shouldn't (can't) be part of the student reports
+##
+#
+
+SGPstateData[["CO"]][["SGP_Configuration"]][["content_area.projection.sequence"]][["MATHEMATICS_INTGRT_SS"]] <-
+SGPstateData[["CO"]][["SGP_Configuration"]][["year_lags.projection.sequence"]][["MATHEMATICS_INTGRT_SS"]] <-
+SGPstateData[["CO"]][["SGP_Configuration"]][["grade.projection.sequence"]][["MATHEMATICS_INTGRT_SS"]] <- NULL
+
+Colorado_SGP@SGP$SGProjections$MATHEMATICS_SS.2015_2016 <- 
+	Colorado_SGP@SGP$SGProjections$MATHEMATICS_SS.2015_2016[!SGP_PROJECTION_GROUP %in% c("MATHEMATICS_INTGRT_SS", "INTEGRATED_MATH_1_SS")]
+
+#
+##
+###
+
+###  Create student report DEMO catalog
+
+visualizeSGP(
+	Colorado_SGP,
+	plot.types=c("studentGrowthPlot"),
+	sgPlot.demo.report = TRUE)
+
+
 
