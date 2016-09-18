@@ -12,11 +12,11 @@ require(SGP)
 
 ###    Load Data
 
-Colorado_Data_LONG_2015 <- fread("Data/Base_Files/PARCC_2015_Longfile.csv", 
+Colorado_Data_LONG_2015 <- fread("Data/Base_Files/PARCC_2015_Longfile.csv",
 					sep=',', header=TRUE, colClasses=rep("character", 26))
 setkey(Colorado_Data_LONG_2015, FPRC_SUMM_SCORE_REC_UUID)
 
-thetas <- fread("Data/Base_Files/Summ UUID & Thetas.csv", 
+thetas <- fread("Data/Base_Files/Summ UUID & Thetas.csv",
 					sep=',', header=TRUE, colClasses=c("character", "numeric"))
 setnames(thetas, 1, "FPRC_SUMM_SCORE_REC_UUID")
 setkey(thetas, FPRC_SUMM_SCORE_REC_UUID)
@@ -32,8 +32,8 @@ setnames(Colorado_Data_LONG_2015, c("ThetaScore", "SCALE_SCORE"), c("SCALE_SCORE
 
 #  Convert CONTENT_AREA from test name to human readible levels
 Colorado_Data_LONG_2015[, CONTENT_AREA := factor(CONTENT_AREA)]
-levels(Colorado_Data_LONG_2015$CONTENT_AREA) <- 
-	c("ALGEBRA_I", "ALGEBRA_II", "ELA", "GEOMETRY", "MATHEMATICS", 
+levels(Colorado_Data_LONG_2015$CONTENT_AREA) <-
+	c("ALGEBRA_I", "ALGEBRA_II", "ELA", "GEOMETRY", "MATHEMATICS",
 	  "INTEGRATED_MATH_1", "INTEGRATED_MATH_2", "INTEGRATED_MATH_3")
 Colorado_Data_LONG_2015[, CONTENT_AREA := as.character(CONTENT_AREA)]
 
@@ -66,13 +66,13 @@ levels(Colorado_Data_LONG_2015$ETHNICITY)[6] <- "Native Hawaiian or Pacific Isla
 #  Clean up YEAR
 setnames(Colorado_Data_LONG_2015, "YR", "YEAR")
 
-###  Invalidate duplicated case 
+###  Invalidate duplicated case
 #      Only one kid - different grades.  Invalidate 3rd grade, keep 6th since enrolled in a middle school and has 6th grade math scores ...
 setkey(Colorado_Data_LONG_2015, VALID_CASE, CONTENT_AREA, YEAR, ID, SCALE_SCORE)
 setkey(Colorado_Data_LONG_2015, VALID_CASE, CONTENT_AREA, YEAR, ID)
-# sum(duplicated(Colorado_Data_LONG_2015[VALID_CASE != "INVALID_CASE"])) # 1
-# dups <- data.table(Colorado_Data_LONG_2015[unique(c(which(duplicated(Colorado_Data_LONG_2015))-1, which(duplicated(Colorado_Data_LONG_2015)))), ], key=key(Colorado_Data_LONG_2015))
-Colorado_Data_LONG_2015[which(duplicated(Colorado_Data_LONG_2015)), VALID_CASE := "INVALID_CASE"]
+# sum(duplicated(Colorado_Data_LONG_2015[VALID_CASE != "INVALID_CASE"], by=key(Colorado_Data_LONG_2015))) # 1
+# dups <- data.table(Colorado_Data_LONG_2015[unique(c(which(duplicated(Colorado_Data_LONG_2015, by=key(Colorado_Data_LONG_2015)))-1, which(duplicated(Colorado_Data_LONG_2015, by=key(Colorado_Data_LONG_2015))))), ], key=key(Colorado_Data_LONG_2015))
+Colorado_Data_LONG_2015[which(duplicated(Colorado_Data_LONG_2015, by=key(Colorado_Data_LONG_2015))), VALID_CASE := "INVALID_CASE"]
 
 #  Save 2015 Data
 save(Colorado_Data_LONG_2015, file="Data/Colorado_Data_LONG_2015.Rdata")
