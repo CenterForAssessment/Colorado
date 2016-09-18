@@ -55,7 +55,7 @@ Colorado_SGP <- updateSGP(
 
 
 ### Fill in ACHIEVEMENT_LEVEL_PRIOR for ELA -- WRITING was the test specified as first prior...
-for (pg in 3:10) {
+for (pg in 3:8) {
 	Colorado_SGP@Data[which(CONTENT_AREA=="ELA" & YEAR=='2015' & GRADE==pg+1 & VALID_CASE=="VALID_CASE"), 
 		ACHIEVEMENT_LEVEL_PRIOR := ordered(findInterval(as.numeric(SCALE_SCORE_PRIOR), 
 			SGPstateData[["CO"]][["Achievement"]][["Cutscores"]][["WRITING"]][[paste("GRADE", pg, sep="_")]]), 
