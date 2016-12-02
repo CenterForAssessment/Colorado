@@ -64,7 +64,7 @@ save(Colorado_SGP, file="Data/Colorado_SGP.Rdata")
 Colorado_SGP <- summarizeSGP(
 	Colorado_SGP,
 	parallel.config=list(
-		BACKEND="FOREACH", TYPE="doParallel", SNOW_TEST=TRUE, 
+		BACKEND="FOREACH", TYPE="doParallel", SNOW_TEST=TRUE,
 		WORKERS=list(SUMMARY=6))
 )
 
@@ -76,7 +76,7 @@ Colorado_SGP <- summarizeSGP(
 
 
 visualizeSGP(Colorado_SGP,
-	plot.types = "bubblePlot",
+	plot.types = c("bubblePlot", "growthAchievementPlot"), # "bubblePlot",
 	bPlot.years=  "2015_2016.2",
 	# bPlot.content_areas=c("ELA_SS", "MATHEMATICS_SS", "ALGEBRA_I_SS", "GEOMETRY_SS", "ALGEBRA_II_SS"),
 	bPlot.anonymize=TRUE)
@@ -86,32 +86,32 @@ visualizeSGP(Colorado_SGP,
 ###  Student growth plots
 ###
 
-###  Need to get rid of the '.2' usage in year  --  causes problems with pdflatex creation of school catalogs/files
+###  Two Required External Steps for Colorado ISRs!!!
 
-Colorado_SGP@Data[, YEAR := gsub("[.]2", "", YEAR)]
-names(Colorado_SGP@SGP$SGProjections) <- gsub("2015_2016.2", "2015_2016", names(Colorado_SGP@SGP$SGProjections))
+###  Step 1.  Reconfigure the MATHEMATICS_SS projection sequences (specifically the Integrated Math plots)
+###						This is NOT desired for the computation of the projections, but needed here to plot out the Integrated Math courses correctly
 
-###  Null out MATHEMATICS_INTGRT_SS projections manually - want it to calculate the projections (in case ever needed), but shouldn't (can't) be part of the student reports
-##
-#
+SGPstateData[["CO"]][["SGP_Configuration"]][["grade.projection.sequence"]][["MATHEMATICS_SS"]] <- c("3", "4", "5", "6", "7", "8", "EOCT", "EOCT", "EOCT", NA, NA, "EOCT", "EOCT", "EOCT")
+SGPstateData[["CO"]][["SGP_Configuration"]][["content_area.projection.sequence"]][["MATHEMATICS_SS"]] <- c(rep("MATHEMATICS_SS", 6), "ALGEBRA_I_SS", "GEOMETRY_SS", "ALGEBRA_II_SS", NA, NA, "INTEGRATED_MATH_1_SS", "INTEGRATED_MATH_2_SS", "INTEGRATED_MATH_3_SS")
+SGPstateData[["CO"]][["SGP_Configuration"]][["year_lags.projection.sequence"]][["MATHEMATICS_SS"]] <- rep(1L, 13)
 
-SGPstateData[["CO"]][["SGP_Configuration"]][["content_area.projection.sequence"]][["MATHEMATICS_INTGRT_SS"]] <-
-SGPstateData[["CO"]][["SGP_Configuration"]][["year_lags.projection.sequence"]][["MATHEMATICS_INTGRT_SS"]] <-
-SGPstateData[["CO"]][["SGP_Configuration"]][["grade.projection.sequence"]][["MATHEMATICS_INTGRT_SS"]] <- NULL
 
-Colorado_SGP@SGP$SGProjections$MATHEMATICS_SS.2015_2016 <- 
-	Colorado_SGP@SGP$SGProjections$MATHEMATICS_SS.2015_2016[!SGP_PROJECTION_GROUP %in% c("MATHEMATICS_INTGRT_SS", "INTEGRATED_MATH_1_SS")]
+###  Step 2.  Remove the Integrated Math projections from the MATHEMATICS_SS slot
+###						DO NOT SAVE THE SGP OBJECT AFTER THIS STEP !!!
+###						We have calculated the progression of grade level math to integrated Math
+###						(as well as to the "canonical" progression - to Algebra I, Geom, and Alg II),
+###						but we only want to show one in the plots, so we have to remove the Integrated Math ones first.
+###						DO NOT SAVE THE SGP OBJECT AFTER THIS STEP !!!
 
-#
-##
-###
+Colorado_SGP@SGP$SGProjections$MATHEMATICS_SS.2015_2016.2 <-
+	Colorado_SGP@SGP$SGProjections$MATHEMATICS_SS.2015_2016.2[!SGP_PROJECTION_GROUP %in% c("MATHEMATICS_INTGRT_SS", "INTEGRATED_MATH_1_SS")]
 
-###  Create student report DEMO catalog
+
+###  Step 3.  Produce ISRs
 
 visualizeSGP(
 	Colorado_SGP,
 	plot.types=c("studentGrowthPlot"),
-	sgPlot.demo.report = TRUE)
-
-
-
+	sgPlot.demo.report = TRUE,  #  Only use for producing a test set of plots!
+	# sgPlot.front.page = "Visualizations/Misc/CDE_Cover.pdf", # Introduction to the report.  File path is relative to the working directory
+	sgPlot.header.footer.color="#1A7A9A")
