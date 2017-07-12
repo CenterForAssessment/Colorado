@@ -36,7 +36,7 @@ Colorado_Data_LONG_2017[which(CONTENT_AREA %in% c("ALGEBRA_I", "ALGEBRA_II", "GE
 
 #  Convert SCALE_SCORE variable to numeric
 Colorado_Data_LONG_2017[, SCALE_SCORE:=as.numeric(SCALE_SCORE)]
-Colorado_Data_LONG_2017[, SCALE_SCORE_ADJUSTED:=SCALE_SCORE]
+Colorado_Data_LONG_2017[, SCALE_SCORE_ORIGINAL:=SCALE_SCORE]
 
 #  Convert YEAR to match PARCC conventions
 Colorado_Data_LONG_2017[which(YEAR=="2017"), YEAR := "2016_2017.2"]
