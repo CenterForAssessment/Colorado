@@ -18,23 +18,34 @@ load("Data/Colorado_Data_LONG_2017.Rdata")
 
 ###  Read in 2017 SGP Configuration Scripts and Combine
 
-source("SGP_CONFIG/2017/ELA.R")
-source("SGP_CONFIG/2017/MATHEMATICS.R")
+source("SGP_CONFIG/2017/ELA_SS.R")
+source("SGP_CONFIG/2017/MATHEMATICS_SS.R")
 
 COLO_2017.config <- c(
-		MATHEMATICS_2017.config,
-		ELA_2017.config)
+	ELA_SS.2016_2017.2.config,
+	MATHEMATICS_SS.2016_2017.2.config,
 
+	ALGEBRA_I_SS.2016_2017.2.config,
+	GEOMETRY_SS.2016_2017.2.config,
+	ALGEBRA_II_SS.2016_2017.2.config,
+
+	INTEGRATED_MATH_1_SS.2016_2017.2.config,
+	INTEGRATED_MATH_2_SS.2016_2017.2.config
+)
+
+SGPstateData[["PARCC"]][["SGP_Configuration"]][["rq.method"]] <- "br"
+
+co.names <- Colorado_SGP@Names
 
 ###
-###    updateSGP - Two step process to produce SGPs for Adjusted and Unadjusted Scale Scores
+###    updateSGP - Two step process to produce SGPs
 ###
 
 Colorado_SGP <- updateSGP(
 		Colorado_SGP,
 		Colorado_Data_LONG_2017,
 		sgp.config = COLO_2017.config,
-		steps=c("prepareSGP", "analyzeSGP", "combineSGP", "outputSGP"), # "summarizeSGP", "outputSGP"
+		steps=c("prepareSGP", "analyzeSGP", "combineSGP", "outputSGP"), # "summarizeSGP"
 		sgp.percentiles = TRUE,
 		sgp.projections = TRUE,
 		sgp.projections.lagged = TRUE,
@@ -44,24 +55,26 @@ Colorado_SGP <- updateSGP(
 		simulate.sgps = FALSE,
 		save.intermediate.results=FALSE,
 		outputSGP.output.type=c("LONG_Data", "LONG_FINAL_YEAR_Data", "WIDE_Data"),
-		parallel.config = list(BACKEND="PARALLEL", WORKERS=list(PERCENTILES=8, PROJECTIONS=8, LAGGED_PROJECTIONS=8))) # Ubuntu/Linux
+		parallel.config = list(BACKEND="PARALLEL", WORKERS=list(PERCENTILES=12, PROJECTIONS=12, LAGGED_PROJECTIONS=12))) # Ubuntu/Linux
 
-
-###  Save 2017 Colorado SGP object
-save(Colorado_SGP, file="Data/Colorado_SGP.Rdata")
-
-
+		table(as.character(Colorado_SGP@SGP$SGPercentiles$GEOMETRY_SS.2016_2017.2$SGP_NORM_GROUP))
+		
 ###
 ###    Summarize Results
 ###
 
+co.names -> Colorado_SGP@Names
+
 Colorado_SGP <- summarizeSGP(
 	Colorado_SGP,
 	parallel.config=list(
-		BACKEND="FOREACH", TYPE="doParallel", SNOW_TEST=TRUE,
-		WORKERS=list(SUMMARY=6))
+		BACKEND="PARALLEL",
+		WORKERS=list(SUMMARY=20))
 )
 
+
+###  Save 2017 Colorado SGP object
+save(Colorado_SGP, file="Data/Colorado_SGP.Rdata")
 
 
 ###

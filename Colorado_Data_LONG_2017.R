@@ -67,6 +67,7 @@ levels(Colorado_Data_LONG_2017$ETHNICITY)[6] <- "Native Hawaiian or Pacific Isla
 setkey(Colorado_Data_LONG_2017, VALID_CASE, CONTENT_AREA, YEAR, ID, GRADE, SCALE_SCORE)
 setkey(Colorado_Data_LONG_2017, VALID_CASE, CONTENT_AREA, YEAR, ID, GRADE)
 # dups <- data.table(Colorado_Data_LONG_2017[unique(c(which(duplicated(Colorado_Data_LONG_2017, by=key(Colorado_Data_LONG_2017)))-1, which(duplicated(Colorado_Data_LONG_2017, by=key(Colorado_Data_LONG_2017))))), ], key=key(Colorado_Data_LONG_2017))
+# # All 2017 duplicates within GRADE are already INVALID_CASEs - many with NA scores.
 Colorado_Data_LONG_2017[which(duplicated(Colorado_Data_LONG_2017, by=key(Colorado_Data_LONG_2017))), VALID_CASE:="INVALID_CASE"]
 
 #  Save 2017 Data
