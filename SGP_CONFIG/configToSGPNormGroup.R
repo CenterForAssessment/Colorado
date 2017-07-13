@@ -16,13 +16,13 @@ configToSGPNormGroup <- function(sgp.config) {
 		tmp.data.all <- data.table()
 		for (g in 1:length(sgp.config$sgp.grade.sequences)) {
 			l <- length(sgp.config$sgp.grade.sequences[[g]])
-			tmp.norm.group <- tmp.norm.group.baseline <- paste(tail(sgp.config$sgp.panel.years, l), paste(tail(sgp.config$sgp.content.areas, l), unlist(sgp.config$sgp.grade.sequences[[g]]), sep="_"), sep="/") 
-			
+			tmp.norm.group <- tmp.norm.group.baseline <- paste(tail(sgp.config$sgp.panel.years, l), paste(tail(sgp.config$sgp.content.areas, l), unlist(sgp.config$sgp.grade.sequences[[g]]), sep="_"), sep="/")
+
 			tmp.data <- data.table(
-				SGP_NORM_GROUP=paste(tmp.norm.group, collapse="; "), 
+				SGP_NORM_GROUP=paste(tmp.norm.group, collapse="; "),
 				# SGP_NORM_GROUP_BASELINE=paste(tmp.norm.group.baseline, collapse="; "),
 				PREFERENCE= sgp.config$sgp.norm.group.preference*100)
-			
+
 			if (length(tmp.norm.group) > 2) {
 				if ("sgp.exact.grade.progression" %in% names(sgp.config)) {
 					if(sgp.config$sgp.exact.grade.progression[[g]]) tmp.all.prog <- FALSE else tmp.all.prog <- TRUE
@@ -30,8 +30,8 @@ configToSGPNormGroup <- function(sgp.config) {
 				if (tmp.all.prog) {
 					for (n in 1:(length(tmp.norm.group)-2)) {
 						tmp.data <- rbind(tmp.data, data.table(
-							SGP_NORM_GROUP=paste(tail(tmp.norm.group, -n), collapse="; "), 
-							# SGP_NORM_GROUP_BASELINE=paste(tmp.norm.group.baseline, collapse="; "),
+							SGP_NORM_GROUP=paste(tail(tmp.norm.group, -n), collapse="; "),
+							# SGP_NORM_GROUP_BASELINE=paste(tail(tmp.norm.group.baseline, -n), collapse="; "),
 							PREFERENCE= (sgp.config$sgp.norm.group.preference*100)+n))
 					}
 				}
