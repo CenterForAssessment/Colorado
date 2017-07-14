@@ -12,7 +12,7 @@ require(data.table)
 
 ###  Load data
 
-load("Data/Colorado_SGP.Rdata")
+load("Data/Archive/July 2017/Colorado_SGP.Rdata")
 load("Data/Colorado_Data_LONG_2017.Rdata")
 
 
@@ -34,6 +34,7 @@ COLO_2017.config <- c(
 )
 
 co.names <- Colorado_SGP@Names
+Colorado_SGP@SGP$Error_Reports <- NULL  #  Remove error reports from 2016 analyses (Integrated Math projections)
 
 ###
 ###    updateSGP - To produce SG percentiles and Projections
