@@ -22,7 +22,7 @@ ALGEBRA_I_SS.2016_2017.2.config <- list(
 	ALGEBRA_I_SS.2016_2017.2 = list(
 		sgp.content.areas=c("MATHEMATICS_SS", "MATHEMATICS_SS", "ALGEBRA_I_SS"),
 		sgp.panel.years=c("2014_2015.2", "2015_2016.2", "2016_2017.2"),
-		sgp.grade.sequences=list(c("5", "6", "EOCT"), c("6", "7", "EOCT")), # 7th & 8th grades
+		sgp.grade.sequences=list(c("6", "EOCT"), c("6", "7", "EOCT")), # 7th & 8th grades  {7th Grade has "Singular design matrix" error with 5th Grade}
 		sgp.projection.grade.sequences=as.list(rep("NO_PROJECTIONS", 2)),
 		sgp.norm.group.preference=1L),
 	ALGEBRA_I_SS.2016_2017.2 = list( #  --  <1000 :: Include for SGP_NOTE
@@ -64,6 +64,7 @@ ALGEBRA_II_SS.2016_2017.2.config <- list(
 		sgp.content.areas=c("ALGEBRA_I_SS", "GEOMETRY_SS", "ALGEBRA_II_SS"),
 		sgp.panel.years=c("2014_2015.2", "2015_2016.2", "2016_2017.2"),
 		sgp.grade.sequences=list(c("EOCT", "EOCT", "EOCT")),
+		sgp.projection.grade.sequences=list("NO_PROJECTIONS"),
 		sgp.norm.group.preference=0L)
 )
 
@@ -89,5 +90,6 @@ INTEGRATED_MATH_2_SS.2016_2017.2.config <- list(
 		sgp.content.areas=c("INTEGRATED_MATH_1_SS", "INTEGRATED_MATH_2_SS"),
 		sgp.panel.years=c("2015_2016.2", "2016_2017.2"),
 		sgp.grade.sequences=list(c("EOCT", "EOCT")),
+		sgp.projection.grade.sequences=list("NO_PROJECTIONS"),
 		sgp.norm.group.preference=0L)
 )

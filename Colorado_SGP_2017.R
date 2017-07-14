@@ -36,7 +36,7 @@ COLO_2017.config <- c(
 co.names <- Colorado_SGP@Names
 
 ###
-###    updateSGP - Two step process to produce SGPs
+###    updateSGP - To produce SG percentiles and Projections
 ###
 
 Colorado_SGP <- updateSGP(
@@ -56,7 +56,7 @@ Colorado_SGP <- updateSGP(
 		parallel.config = list(BACKEND="PARALLEL", WORKERS=list(PERCENTILES=12, PROJECTIONS=12, LAGGED_PROJECTIONS=12))) # Ubuntu/Linux
 
 		table(as.character(Colorado_SGP@SGP$SGPercentiles$GEOMETRY_SS.2016_2017.2$SGP_NORM_GROUP))
-		
+
 ###
 ###    Summarize Results
 ###
