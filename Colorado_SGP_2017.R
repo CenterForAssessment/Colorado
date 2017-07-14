@@ -33,8 +33,6 @@ COLO_2017.config <- c(
 	INTEGRATED_MATH_2_SS.2016_2017.2.config
 )
 
-SGPstateData[["PARCC"]][["SGP_Configuration"]][["rq.method"]] <- "br"
-
 co.names <- Colorado_SGP@Names
 
 ###
