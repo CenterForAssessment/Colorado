@@ -25,7 +25,7 @@ ALGEBRA_I_SS.2016_2017.2.config <- list(
 		sgp.grade.sequences=list(c("6", "EOCT"), c("6", "7", "EOCT")), # 7th & 8th grades  {7th Grade has "Singular design matrix" error with 5th Grade}
 		sgp.projection.grade.sequences=as.list(rep("NO_PROJECTIONS", 2)),
 		sgp.norm.group.preference=1L),
-	ALGEBRA_I_SS.2016_2017.2 = list( #  --  <1000 :: Include for SGP_NOTE
+	ALGEBRA_I_SS.2016_2017.2 = list( #  --  <2000 :: Include for SGP_NOTE
 		sgp.content.areas=c("GEOMETRY_SS", "ALGEBRA_I_SS"),
 		sgp.panel.years=c("2015_2016.2", "2016_2017.2"),
 		sgp.grade.sequences=list(c("EOCT", "EOCT")),
@@ -36,21 +36,23 @@ ALGEBRA_I_SS.2016_2017.2.config <- list(
 
 GEOMETRY_SS.2016_2017.2.config <- list(
 	### CANONICAL - Put first even though most are in  c("7", "EOCT", "EOCT") since testing cut off at 9th Grade ???
-	# GEOMETRY_SS.2016_2017.2 = list( #  --  <1000 :: Include for SGP_NOTE
-	# 	sgp.content.areas=c("MATHEMATICS_SS", "ALGEBRA_I_SS", "GEOMETRY_SS"),
-	# 	sgp.panel.years=c("2014_2015.2", "2015_2016.2", "2016_2017.2"),
-	# 	sgp.grade.sequences=list(c("8", "EOCT", "EOCT")),
-	# 	sgp.norm.group.preference=0L),
+	GEOMETRY_SS.2016_2017.2 = list( #  --  <2000 :: Include for SGP_NOTE
+		sgp.content.areas=c("MATHEMATICS_SS", "ALGEBRA_I_SS", "GEOMETRY_SS"),
+		sgp.panel.years=c("2014_2015.2", "2015_2016.2", "2016_2017.2"),
+		sgp.grade.sequences=list(c("8", "EOCT", "EOCT")),
+		sgp.exact.grade.progression=TRUE,
+		sgp.projection.grade.sequences=list("NO_PROJECTIONS"),
+		sgp.norm.group.preference=0L),
 
 	GEOMETRY_SS.2016_2017.2 = list(
 		sgp.content.areas=c("MATHEMATICS_SS", "ALGEBRA_I_SS", "GEOMETRY_SS"),
 		sgp.panel.years=c("2014_2015.2", "2015_2016.2", "2016_2017.2"),
 		sgp.grade.sequences=list(c("7", "EOCT", "EOCT")), # c("6", "EOCT", "EOCT"),
-		# sgp.exact.grade.progression=as.list(rep(TRUE, 2)), #  YES if running CANONICAL above to avoid multiple "ALGEBRA_I_SS", "GEOMETRY_SS" matrices
+		# sgp.exact.grade.progression=TRUE, #  YES if running CANONICAL above to avoid multiple "ALGEBRA_I_SS", "GEOMETRY_SS" matrices
 		sgp.projection.grade.sequences=list("NO_PROJECTIONS"),
 		sgp.norm.group.preference=1L),
 
-	GEOMETRY_SS.2016_2017.2 = list( #  --  <1000 :: Include for SGP_NOTE
+	GEOMETRY_SS.2016_2017.2 = list( #  --  <2000 :: Include for SGP_NOTE
 		sgp.content.areas=c("MATHEMATICS_SS", "MATHEMATICS_SS", "GEOMETRY_SS"),
 		sgp.panel.years=c("2014_2015.2", "2015_2016.2", "2016_2017.2"),
 		sgp.grade.sequences=list(c("6", "7", "EOCT"), c("7", "8", "EOCT")), # 8th & 9th grades
@@ -59,8 +61,16 @@ GEOMETRY_SS.2016_2017.2.config <- list(
 )
 
 
+GEOMETRY_SS.Projections.2016_2017.2.config <- list(
+	### CANONICAL  --  Restricted to single prior.
+  GEOMETRY_SS.2016_2017.2 = list(
+		sgp.content.areas=c("ALGEBRA_I_SS", "GEOMETRY_SS"),
+		sgp.panel.years=c("2015_2016.2", "2016_2017.2"),
+		sgp.grade.sequences=list(c("EOCT", "EOCT"))))
+
+
 ALGEBRA_II_SS.2016_2017.2.config <- list(
-	ALGEBRA_II_SS.2016_2017.2 = list( ###  CANONICAL  --  <1000 :: Include for SGP_NOTE
+	ALGEBRA_II_SS.2016_2017.2 = list( ###  CANONICAL  --  <2000 :: Include for SGP_NOTE
 		sgp.content.areas=c("ALGEBRA_I_SS", "GEOMETRY_SS", "ALGEBRA_II_SS"),
 		sgp.panel.years=c("2014_2015.2", "2015_2016.2", "2016_2017.2"),
 		sgp.grade.sequences=list(c("EOCT", "EOCT", "EOCT")),
@@ -76,7 +86,7 @@ INTEGRATED_MATH_1_SS.2016_2017.2.config <- list(
 		sgp.grade.sequences=list(c("7", "8", "EOCT")),
 		sgp.norm.group.preference=0L),
 
-	INTEGRATED_MATH_1.2016_2017.2 = list( ###  --  <1000 :: Include for SGP_NOTE
+	INTEGRATED_MATH_1.2016_2017.2 = list( ###  --  <2000 :: Include for SGP_NOTE
 		sgp.content.areas=c("MATHEMATICS_SS", "MATHEMATICS_SS", "INTEGRATED_MATH_1_SS"),
 		sgp.panel.years=c("2014_2015.2", "2015_2016.2", "2016_2017.2"),
 		sgp.grade.sequences=list(c("6", "7", "EOCT")), # 8th grade
