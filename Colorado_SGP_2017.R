@@ -153,5 +153,6 @@ visualizeSGP(
 	Colorado_SGP,
 	plot.types=c("studentGrowthPlot"),
 	sgPlot.demo.report = TRUE,  #  Only use for producing a test set of plots!
-	# sgPlot.front.page = "Visualizations/Misc/CDE_Cover.pdf", # Introduction to the report.  File path is relative to the working directory
+	sgPlot.front.page = "Visualizations/Misc/2017_ISR_Cover_Page.pdf",
+	# sgPlot.front.page = "Visualizations/Misc/2017 ISR Cover Page.pdf", # Introduction to the report.  File path is relative to the working directory
 	sgPlot.header.footer.color="#1A7A9A")
