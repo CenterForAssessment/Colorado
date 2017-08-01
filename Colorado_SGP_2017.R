@@ -152,7 +152,10 @@ Colorado_SGP@SGP$SGProjections$MATHEMATICS_SS.2016_2017.2 <-
 visualizeSGP(
 	Colorado_SGP,
 	plot.types=c("studentGrowthPlot"),
-	sgPlot.demo.report = TRUE,  #  Only use for producing a test set of plots!
-	sgPlot.front.page = "Visualizations/Misc/2017_ISR_Cover_Page.pdf",
-	# sgPlot.front.page = "Visualizations/Misc/2017 ISR Cover Page.pdf", # Introduction to the report.  File path is relative to the working directory
-	sgPlot.header.footer.color="#1A7A9A")
+	# sgPlot.demo.report = TRUE,  #  Only use for producing a test set of plots!
+	sgPlot.front.page = "Visualizations/Misc/2017_ISR_Cover_Page.pdf", #  RENAME FILE (Dan's has spaces in name)  -  Introduction to the report.  File path is relative to the working directory.
+	sgPlot.districts = c("0130", "0180"),
+	sgPlot.header.footer.color="#1A7A9A",
+	parallel.config=list(
+		BACKEND="PARALLEL",
+		WORKERS=list(SG_PLOTS = 24)))
