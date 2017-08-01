@@ -29,27 +29,28 @@ COLO_2017.config <- c(
 )
 
 
-###
-###    updateSGP - To produce SG Percentiles
-###
+###  Edit SGPstateData metadata
 
-TRY AGAIN WITH updateSGP.  Adjust the logic in getPreferredSGP so that it checks first to see if any duplicates remain after checking.
-if not it returns the tmp.data, but if so then it g
+###  Add in the single year data sample computed Knots and Boundaries (add to SGPstateData only after 2-3 years available)
+kbs <- createKnotsBoundaries(Colorado_Data_LONG_2017)
+SGPstateData[["CO"]][["Achievement"]][["Knots_Boundaries"]] <- c(SGPstateData[["CO"]][["Achievement"]][["Knots_Boundaries"]], kbs)
 
+###  Remove the SGP_Configuration projections info.  This conflicts with the getKnotsBoundaries function.
 SGPstateData[["CO"]][["SGP_Configuration"]][["grade.projection.sequence"]] <- NULL
 SGPstateData[["CO"]][["SGP_Configuration"]][["content_area.projection.sequence"]] <- NULL
 SGPstateData[["CO"]][["SGP_Configuration"]][["year_lags.projection.sequence"]] <- NULL
 
-my.workers <- 12  #  Number of CPU cores for parallel calculations.  12 for Ubuntu/Linux
+###
+###    updateSGP - To produce SG Percentiles
+###
+
+my.workers <- 12  #  Number of CPU cores for parallel calculations.
 
 Colorado_SGP <- updateSGP(
-# Colorado_SGP <- abcSGP(state="CO",
-		# sgp_object=rbindlist(list(Colorado_SGP_LONG_Data, Colorado_Data_LONG_2017), fill=TRUE),
 		Colorado_SGP,
 		Colorado_Data_LONG_2017,
 		sgp.config = COLO_2017.config,
-		steps=c("prepareSGP", "analyzeSGP"),
-		# steps=c("prepareSGP", "analyzeSGP", "combineSGP", "summarizeSGP", "outputSGP"),
+		steps=c("prepareSGP", "analyzeSGP", "combineSGP", "summarizeSGP", "outputSGP"),
 		sgp.projections = FALSE,
 		sgp.projections.lagged = FALSE,
 		sgp.percentiles.baseline=FALSE,
@@ -63,6 +64,7 @@ Colorado_SGP <- updateSGP(
 		parallel.config = list(
 			BACKEND="PARALLEL", WORKERS=list(PERCENTILES=my.workers, SUMMARY = my.workers)))
 
-Colorado_SGP <- combineSGP(Colorado_SGP)
+# table(Colorado_SGP@Data[grep("2015_2016.2/MATHEMATICS_PSAT_10; 2016_2017.2/MATHEMATICS_SAT_11", SGP_NORM_GROUP), as.character(SGP_NORM_GROUP)])
 
-table(Colorado_SGP@Data[grep("2015_2016.2/MATHEMATICS_PSAT_10; 2016_2017.2/MATHEMATICS_SAT_11", SGP_NORM_GROUP), as.character(SGP_NORM_GROUP)])
+###  Save 2017 Colorado SGP object
+save(Colorado_SGP, file="Data/Colorado_SGP.Rdata")
