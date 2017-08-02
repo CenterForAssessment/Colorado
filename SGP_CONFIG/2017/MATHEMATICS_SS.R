@@ -143,27 +143,28 @@ MATHEMATICS_PSAT.2016_2017.2.config <- list(
 )
 
 MATHEMATICS_SAT.2016_2017.2.config <- list(
-	#  Use sgp.exact.grade.progression to avoid multiple MATHEMATICS_PSAT to MATHEMATICS_SAT duplicates
-	MATHEMATICS_SAT.2016_2017.2 = list(
-		sgp.content.areas=c("ALGEBRA_I_SS", "MATHEMATICS_PSAT", "MATHEMATICS_SAT"),
-		sgp.panel.years=c("2014_2015.2", "2015_2016.2", "2016_2017.2"),
-		sgp.grade.sequences=list(c("EOCT", "10", "11")),
-		sgp.exact.grade.progression=TRUE,
-		sgp.norm.group.preference=0L),
-
-	MATHEMATICS_SAT.2016_2017.2 = list(
-		sgp.content.areas=c("GEOMETRY_SS", "MATHEMATICS_PSAT", "MATHEMATICS_SAT"),
-		sgp.panel.years=c("2014_2015.2", "2015_2016.2", "2016_2017.2"),
-		sgp.grade.sequences=list(c("EOCT", "10", "11")),
-		sgp.exact.grade.progression=TRUE,
-		sgp.norm.group.preference=1L),
-
-	MATHEMATICS_SAT.2016_2017.2 = list(
-		sgp.content.areas=c("INTEGRATED_MATH_1_SS", "MATHEMATICS_PSAT", "MATHEMATICS_SAT"),
-		sgp.panel.years=c("2014_2015.2", "2015_2016.2", "2016_2017.2"),
-		sgp.grade.sequences=list(c("EOCT", "10", "11")),
-		sgp.exact.grade.progression=TRUE,
-		sgp.norm.group.preference=2L),
+	###  ONLY PSAT Prior for 2017
+	###  Use sgp.exact.grade.progression to avoid multiple MATHEMATICS_PSAT to MATHEMATICS_SAT duplicates
+	# MATHEMATICS_SAT.2016_2017.2 = list(
+	# 	sgp.content.areas=c("ALGEBRA_I_SS", "MATHEMATICS_PSAT", "MATHEMATICS_SAT"),
+	# 	sgp.panel.years=c("2014_2015.2", "2015_2016.2", "2016_2017.2"),
+	# 	sgp.grade.sequences=list(c("EOCT", "10", "11")),
+	# 	sgp.exact.grade.progression=TRUE,
+	# 	sgp.norm.group.preference=0L),
+	#
+	# MATHEMATICS_SAT.2016_2017.2 = list(
+	# 	sgp.content.areas=c("GEOMETRY_SS", "MATHEMATICS_PSAT", "MATHEMATICS_SAT"),
+	# 	sgp.panel.years=c("2014_2015.2", "2015_2016.2", "2016_2017.2"),
+	# 	sgp.grade.sequences=list(c("EOCT", "10", "11")),
+	# 	sgp.exact.grade.progression=TRUE,
+	# 	sgp.norm.group.preference=1L),
+	#
+	# MATHEMATICS_SAT.2016_2017.2 = list(
+	# 	sgp.content.areas=c("INTEGRATED_MATH_1_SS", "MATHEMATICS_PSAT", "MATHEMATICS_SAT"),
+	# 	sgp.panel.years=c("2014_2015.2", "2015_2016.2", "2016_2017.2"),
+	# 	sgp.grade.sequences=list(c("EOCT", "10", "11")),
+	# 	sgp.exact.grade.progression=TRUE,
+	# 	sgp.norm.group.preference=2L),
 
 	MATHEMATICS_SAT.2016_2017.2 = list(
 		sgp.content.areas=c("MATHEMATICS_PSAT", "MATHEMATICS_SAT"),

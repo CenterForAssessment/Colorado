@@ -12,7 +12,7 @@ require(data.table)
 
 ###  Load data
 
-load("Data/Colorado_SGP.Rdata")
+load("Data/Colorado_SGP.Rdata")  ##  Start with the SGP object from 2017 CMAS/PARCC analyses
 load("Data/Colorado_Data_LONG_2017-PSAT_SAT.Rdata")
 
 ###  Read in 2017 SGP Configuration Scripts and Combine
@@ -21,10 +21,7 @@ source("SGP_CONFIG/2017/ELA_SS.R")
 source("SGP_CONFIG/2017/MATHEMATICS_SS.R")
 
 COLO_2017.config <- c(
-	ELA_PSAT.2016_2017.2.config,
 	ELA_SAT.2016_2017.2.config,
-
-	MATHEMATICS_PSAT.2016_2017.2.config,
 	MATHEMATICS_SAT.2016_2017.2.config
 )
 
@@ -34,11 +31,6 @@ COLO_2017.config <- c(
 ###  Add in the single year data sample computed Knots and Boundaries (add to SGPstateData only after 2-3 years available)
 kbs <- createKnotsBoundaries(Colorado_Data_LONG_2017)
 SGPstateData[["CO"]][["Achievement"]][["Knots_Boundaries"]] <- c(SGPstateData[["CO"]][["Achievement"]][["Knots_Boundaries"]], kbs)
-
-###  Remove the SGP_Configuration projections info.  This conflicts with the getKnotsBoundaries function.
-SGPstateData[["CO"]][["SGP_Configuration"]][["grade.projection.sequence"]] <- NULL
-SGPstateData[["CO"]][["SGP_Configuration"]][["content_area.projection.sequence"]] <- NULL
-SGPstateData[["CO"]][["SGP_Configuration"]][["year_lags.projection.sequence"]] <- NULL
 
 ###
 ###    updateSGP - To produce SG Percentiles
@@ -50,7 +42,7 @@ Colorado_SGP <- updateSGP(
 		Colorado_SGP,
 		Colorado_Data_LONG_2017,
 		sgp.config = COLO_2017.config,
-		steps=c("prepareSGP", "analyzeSGP", "combineSGP", "summarizeSGP", "outputSGP"),
+		steps=c("prepareSGP", "analyzeSGP", "combineSGP", "outputSGP"),
 		sgp.projections = FALSE,
 		sgp.projections.lagged = FALSE,
 		sgp.percentiles.baseline=FALSE,
@@ -62,9 +54,17 @@ Colorado_SGP <- updateSGP(
 		update.old.data.with.new=FALSE,
 		output.updated.data=FALSE,
 		parallel.config = list(
-			BACKEND="PARALLEL", WORKERS=list(PERCENTILES=my.workers, SUMMARY = my.workers)))
+			BACKEND="PARALLEL", WORKERS=list(PERCENTILES=2)))
 
-# table(Colorado_SGP@Data[grep("2015_2016.2/MATHEMATICS_PSAT_10; 2016_2017.2/MATHEMATICS_SAT_11", SGP_NORM_GROUP), as.character(SGP_NORM_GROUP)])
+
+Colorado_SGP <- summarizeSGP(
+	Colorado_SGP,
+	parallel.config=list(
+		BACKEND="PARALLEL",
+		WORKERS=list(SUMMARY = 12))
+)
+
+table(Colorado_SGP@Summary$SCHOOL_NUMBER$SCHOOL_NUMBER__CONTENT_AREA__YEAR__GRADE__SCHOOL_ENROLLMENT_STATUS[, YEAR, CONTENT_AREA])
 
 ###  Save 2017 Colorado SGP object
 save(Colorado_SGP, file="Data/Colorado_SGP.Rdata")

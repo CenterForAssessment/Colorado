@@ -1,8 +1,8 @@
-#############################################################################################
-###
-### Prep file for 2017 Colorado LONG data
-###
-#############################################################################################
+#########################################################################
+###                                                                   ###
+###               Prep file for 2017 Colorado LONG data               ###
+###                                                                   ###
+#########################################################################
 
 ### Load Packages
 
@@ -18,7 +18,7 @@ read.zip <- function(file, fread.args=NULL) {
 	setwd(tempdir())
 	system(paste0("unzip '", file.path(tmp.dir, paste0(my.file, ".zip")), "'"))
 
-  if (substring(fread.args, 1, 1) != ",") fread.args <- paste(",", fread.args)
+  if (!is.null(fread.args)) if (substring(fread.args, 1, 1) != ",") fread.args <- paste(",", fread.args)
 	TMP <-  eval(parse(text=paste0("data.table::fread('", grep(basename(my.file), list.files(), value=TRUE), "'", fread.args, ")")))
 	unlink(grep(basename(my.file), list.files(), value=TRUE))
 	setwd(tmp.dir)
@@ -78,6 +78,3 @@ setkey(Colorado_Data_LONG_2017, VALID_CASE, CONTENT_AREA, YEAR, ID, GRADE)
 
 #  Save 2017 Data
 save(Colorado_Data_LONG_2017, file="Data/Colorado_Data_LONG_2017-PSAT_SAT.Rdata")
-
-kbs <- createKnotsBoundaries(Colorado_Data_LONG_2017)
-SGPstateData[["CO"]][["Achievement"]][["Knots_Boundaries"]] <- c(SGPstateData[["CO"]][["Achievement"]][["Knots_Boundaries"]], kbs)
