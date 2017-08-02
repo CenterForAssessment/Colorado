@@ -36,8 +36,6 @@ SGPstateData[["CO"]][["Achievement"]][["Knots_Boundaries"]] <- c(SGPstateData[["
 ###    updateSGP - To produce SG Percentiles
 ###
 
-my.workers <- 12  #  Number of CPU cores for parallel calculations.
-
 Colorado_SGP <- updateSGP(
 		Colorado_SGP,
 		Colorado_Data_LONG_2017,
