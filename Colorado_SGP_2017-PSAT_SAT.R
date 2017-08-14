@@ -40,7 +40,7 @@ Colorado_SGP <- updateSGP(
 		Colorado_SGP,
 		Colorado_Data_LONG_2017,
 		sgp.config = COLO_2017.config,
-		steps=c("prepareSGP", "analyzeSGP", "combineSGP", "outputSGP"),
+		steps=c("prepareSGP", "analyzeSGP", "combineSGP"),
 		sgp.projections = FALSE,
 		sgp.projections.lagged = FALSE,
 		sgp.percentiles.baseline=FALSE,
@@ -49,7 +49,6 @@ Colorado_SGP <- updateSGP(
 		simulate.sgps = FALSE,
 		save.intermediate.results=FALSE,
 		overwrite.existing.data=FALSE,
-		update.old.data.with.new=FALSE,
 		output.updated.data=FALSE,
 		parallel.config = list(
 			BACKEND="PARALLEL", WORKERS=list(PERCENTILES=2)))

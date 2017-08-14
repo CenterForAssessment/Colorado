@@ -118,8 +118,9 @@ outputSGP(Colorado_SGP, output.type=c("LONG_Data", "LONG_FINAL_YEAR_Data", "WIDE
 visualizeSGP(Colorado_SGP,
 	plot.types = c("bubblePlot", "growthAchievementPlot"),
 	bPlot.years=  "2016_2017.2",
+	bPlot.anonymize=TRUE,
 	bPlot.content_areas=c("ELA_SS", "MATHEMATICS_SS", "ALGEBRA_I_SS", "GEOMETRY_SS", "INTEGRATED_MATH_1_SS"),
-	bPlot.anonymize=TRUE)
+	gaPlot.content_areas=c("ELA_SS", "MATHEMATICS_SS", "ALGEBRA_I_SS", "GEOMETRY_SS", "INTEGRATED_MATH_1_SS"))
 
 
 ###
@@ -135,6 +136,8 @@ SGPstateData[["CO"]][["SGP_Configuration"]][["grade.projection.sequence"]][["MAT
 SGPstateData[["CO"]][["SGP_Configuration"]][["content_area.projection.sequence"]][["MATHEMATICS_SS"]] <- c(rep("MATHEMATICS_SS", 6), "ALGEBRA_I_SS", "GEOMETRY_SS", "ALGEBRA_II_SS", NA, NA, "INTEGRATED_MATH_1_SS", "INTEGRATED_MATH_2_SS", "INTEGRATED_MATH_3_SS")
 SGPstateData[["CO"]][["SGP_Configuration"]][["year_lags.projection.sequence"]][["MATHEMATICS_SS"]] <- rep(1L, 13)
 
+# SGPstateData[["CO"]][["Student_Report_Information"]][["sgPlot.year.span"]] <- 4 # Number of years to represent in Chart.  Default is 5.  Here 4 = 2 prior years, current year and 1 future year (growth proj fan)
+# Keep sgPlot.year.span at 3 per Marie/Dan J. email
 
 ###  Step 2.  Remove the Integrated Math projections from the MATHEMATICS_SS slot
 ###						DO NOT SAVE THE SGP OBJECT AFTER THIS STEP !!!
