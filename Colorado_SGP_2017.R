@@ -149,6 +149,10 @@ SGPstateData[["CO"]][["SGP_Configuration"]][["year_lags.projection.sequence"]][[
 Colorado_SGP@SGP$SGProjections$MATHEMATICS_SS.2016_2017.2 <-
 	Colorado_SGP@SGP$SGProjections$MATHEMATICS_SS.2016_2017.2[!SGP_PROJECTION_GROUP %in% c("MATHEMATICS_INTGRT_SS", "INTEGRATED_MATH_1_SS")]
 
+# Colorado_SGP@Data[, YEAR := gsub("[.]2", "", YEAR)]
+# setkeyv(Colorado_SGP@Data, SGP:::getKey(Colorado_SGP@Data))
+
+Colorado_SGP@Data[ID==4990675174 & CONTENT_AREA=="MATHEMATICS_SS" & YEAR=="2015_2016.2", VALID_CASE := "INVALID_CASE"] # School 6678, District 1080
 
 ###  Step 3.  Produce ISRs
 
@@ -157,8 +161,30 @@ visualizeSGP(
 	plot.types=c("studentGrowthPlot"),
 	# sgPlot.demo.report = TRUE,  #  Only use for producing a test set of plots!
 	sgPlot.front.page = "Visualizations/Misc/2017_ISR_Cover_Page.pdf", #  RENAME FILE (Dan's has spaces in name)  -  Introduction to the report.  File path is relative to the working directory.
-	sgPlot.districts = c("0130", "0180"),
+	# sgPlot.districts = c("0130", "0180"),
 	sgPlot.header.footer.color="#1A7A9A",
 	parallel.config=list(
 		BACKEND="PARALLEL",
-		WORKERS=list(SG_PLOTS = 24)))
+		WORKERS=list(SG_PLOTS = 30)))
+
+
+###  Step 4. Check the Schools/Districts created
+
+dist <- system("ls /home/ec2-user/Colorado/Visualizations/studentGrowthPlots/School/2016_2017.2", intern=TRUE)
+dat.dist <- unique(Colorado_SGP@Data[YEAR=='2016_2017.2' & !is.na(SGP)]$DISTRICT_NUMBER)
+miss <- setdiff(dat.dist, dist)
+m <- Colorado_SGP@Data[YEAR=='2016_2017.2' & !is.na(SGP) & DISTRICT_NUMBER %in% miss]
+table(m[, GRADE, CONTENT_AREA]) #  All SAT Only
+
+problem.districts <- list()
+for (d in dist) {
+	data.schools <- unique(Colorado_SGP@Data[YEAR=='2016_2017.2' & DISTRICT_NUMBER == d, SCHOOL_NUMBER])
+	file.schools <- system(paste0("ls /home/ec2-user/Colorado/Visualizations/studentGrowthPlots/School/2016_2017.2/", d), intern=TRUE)
+	file.schools <- gsub("[.]zip", "", file.schools)
+	if (!(all(file.schools %in% data.schools) | all(data.schools %in% file.schools))) {
+		missing.schools <- setdiff(data.schools, file.schools)
+		problem.districts[[d]] <- missing.schools
+	}
+}
+
+#  No Problem Schools within Districts :-)
