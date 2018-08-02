@@ -19,6 +19,7 @@ source("SGP_CONFIG/2018/ELA.R")
 source("SGP_CONFIG/2018/MATHEMATICS.R")
 
 COLO_2018.config <- c(
+	# Run 2017 P/SAT SGPs for ISRs
 	ELA_PSAT_10.2017.config,
 	ELA_SAT.2017.config,
 
@@ -40,13 +41,14 @@ COLO_2018.config <- c(
 
 
 ###
-###    abcSGP - To produce SG Percentiles
+###    abcSGP - To produce SG Percentiles and Projections
 ###
 
 Colorado_SGP <- abcSGP(
 		Colorado_Data_LONG,
 		sgp.config = COLO_2018.config,
 		steps=c("prepareSGP", "analyzeSGP", "combineSGP",  "summarizeSGP", "outputSGP"),
+		sgp.percentiles = TRUE,
 		sgp.projections = TRUE,
 		sgp.projections.lagged = TRUE,
 		sgp.percentiles.baseline=FALSE,
@@ -55,7 +57,7 @@ Colorado_SGP <- abcSGP(
 		simulate.sgps = FALSE,
 		save.intermediate.results=FALSE,
 		parallel.config = list(
-			BACKEND="PARALLEL", WORKERS=list(PERCENTILES=4, PROJECTIONS=3, LAGGED_PROJECTIONS=2)))
+			BACKEND="PARALLEL", WORKERS=list(PERCENTILES=14, PROJECTIONS=12, LAGGED_PROJECTIONS=10, SUMMARY=12)))
 
 table(Colorado_SGP@Summary$SCHOOL_NUMBER$SCHOOL_NUMBER__CONTENT_AREA__YEAR__GRADE__SCHOOL_ENROLLMENT_STATUS[, YEAR, CONTENT_AREA])
 

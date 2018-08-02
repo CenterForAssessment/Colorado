@@ -46,11 +46,10 @@ Colorado_SGP_LONG_Data[, CONTENT_AREA := gsub("_SS", "", CONTENT_AREA)]
 
 #   Remove unneccessary variables from PARCC, etc.
 Colorado_SGP_LONG_Data[, CONTENT := NULL]
-Colorado_SGP_LONG_Data[, GRADE_REPORTED := NULL]
 Colorado_SGP_LONG_Data[, FPRC_DDNT_CODE := NULL]
 Colorado_SGP_LONG_Data[, SCALE_SCORE_ORIGINAL := NULL]
 
-table(Colorado_SGP_LONG_Data[, CONTENT_AREA , YEAR])
+table(Colorado_SGP_LONG_Data[, CONTENT_AREA, YEAR])
 
 
 ##  CMAS and P/SAT Data
@@ -69,6 +68,17 @@ Colorado_Data_LONG_2018[CONTENT_AREA=="ELA" & GRADE==11, CONTENT_AREA:= "ELA_SAT
 Colorado_Data_LONG_2018[CONTENT_AREA=="MATHEMATICS" & GRADE==9, CONTENT_AREA := "MATHEMATICS_PSAT_9"]
 Colorado_Data_LONG_2018[CONTENT_AREA=="MATHEMATICS" & GRADE==10, CONTENT_AREA:= "MATHEMATICS_PSAT_10"]
 Colorado_Data_LONG_2018[CONTENT_AREA=="MATHEMATICS" & GRADE==11, CONTENT_AREA:= "MATHEMATICS_SAT"]
+
+#   Set GRADE to 'EOCT' for ALG1 and GEOM.
+Colorado_Data_LONG_2018[, GRADE_REPORTED := GRADE]
+Colorado_Data_LONG_2018[CONTENT_AREA %in% c("ALGEBRA_I", "GEOMETRY", "INTEGRATED_MATH_1", "INTEGRATED_MATH_2"), GRADE := "EOCT"]
+
+table(Colorado_Data_LONG_2018[, GRADE, CONTENT_AREA])
+
+#  Establish ACHIEVEMENT_LEVEL for PSAT/SAT
+Colorado_Data_LONG_2018 <- SGP:::getAchievementLevel(Colorado_Data_LONG_2018, state="CO")
+Colorado_Data_LONG_2018[ACHIEVEMENT_LEVEL=='NA', ACHIEVEMENT_LEVEL := "No Score"]
+table(Colorado_Data_LONG_2018[, ACHIEVEMENT_LEVEL, VALID_CASE])
 
 #   Convert SCALE_SCORE variable to numeric
 Colorado_Data_LONG_2018[, SCALE_SCORE := as.numeric(SCALE_SCORE)]

@@ -28,51 +28,33 @@ names(math.prog$BACKWARD[['2018']])
 
 ###   Algebra I (No Repeaters or Regression)
 
-ALG1 <- math.prog$BACKWARD[['2018']]$ALGEBRA_I.08[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "ALGEBRA_I.08" | is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)] #  Keep NA's for Fall to Fall checks
-ALG1 <- ALG1[CONTENT_AREA_by_GRADE_PRIOR_YEAR.2 != "ALGEBRA_I.08"]
+ALG1 <- math.prog$BACKWARD[['2018']]$ALGEBRA_I.EOCT[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "ALGEBRA_I.EOCT" | is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)] #  Keep NA's for Fall to Fall checks
+ALG1 <- ALG1[CONTENT_AREA_by_GRADE_PRIOR_YEAR.2 != "ALGEBRA_I.EOCT"]
 table(ALG1$CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)
 ALG1[COUNT > 100]  #  Major progressions
 
 ###   Viable 1 Prior (Spring 17) ALGEBRA_I Progressions
 ALG1[, list(Total=sum(COUNT)), keyby="CONTENT_AREA_by_GRADE_PRIOR_YEAR.1"][!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)]
 # CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 Total
-# 1:                     ALGEBRA_I.EOCT   133
-# 2:             INTEGRATED_MATH_1.EOCT     1
-# 3:                     MATHEMATICS.06     2
-# 4:                     MATHEMATICS.07  5883  # YES
-# 5:                     MATHEMATICS.08     2
+# 1:             INTEGRATED_MATH_1.EOCT     1
+# 2:                     MATHEMATICS.06   894
+# 3:                     MATHEMATICS.07  5883  #  YES
+# 4:                     MATHEMATICS.08     2
 
 
 ###   Viable 2 Prior (Spring 17 + Spring 16) ALGEBRA_I Progressions
 ALG1[!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1), list(Total=sum(COUNT)), keyby=c("CONTENT_AREA_by_GRADE_PRIOR_YEAR.1", "CONTENT_AREA_by_GRADE_PRIOR_YEAR.2")][Total > 100]
 #    CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 CONTENT_AREA_by_GRADE_PRIOR_YEAR.2 Total
-# 1:                     ALGEBRA_I.EOCT                     MATHEMATICS.06   128
+# 1:                     MATHEMATICS.06                     MATHEMATICS.05   892
 # 2:                     MATHEMATICS.07                     MATHEMATICS.06  5878
 
 
-###   Algebra I (No Repeaters or Regression)
-
-ALG1.2 <- math.prog$BACKWARD[['2018']]$ALGEBRA_I.07[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "ALGEBRA_I.07" | is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)] #  Keep NA's for Fall to Fall checks
-ALG1.2 <- ALG1.2[CONTENT_AREA_by_GRADE_PRIOR_YEAR.2 != "ALGEBRA_I.08"]
-table(ALG1.2$CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)
-ALG1.2[COUNT > 100]  #  Major progressions
-
-###   Viable 1 Prior (Spring 17) ALGEBRA_I Progressions
-ALG1.2[, list(Total=sum(COUNT)), keyby="CONTENT_AREA_by_GRADE_PRIOR_YEAR.1"][!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)]
-# CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 Total
-# 1:                     MATHEMATICS.06   892
-
-
-###   Viable 2 Prior (Spring 17 + Spring 16) ALGEBRA_I Progressions
-ALG1.2[!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1), list(Total=sum(COUNT)), keyby=c("CONTENT_AREA_by_GRADE_PRIOR_YEAR.1", "CONTENT_AREA_by_GRADE_PRIOR_YEAR.2")][Total > 100]
-#    CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 CONTENT_AREA_by_GRADE_PRIOR_YEAR.2 Total
-# 1:                     MATHEMATICS.06                     MATHEMATICS.05   890
 
 
 ###   Geometry (No Repeaters)
 
-GEOM <- math.prog$BACKWARD[['2018']]$GEOMETRY.08[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "GEOMETRY.08" | is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)] #  Keep NA's for Fall to Fall checks
-GEOM <- GEOM[CONTENT_AREA_by_GRADE_PRIOR_YEAR.2 != "GEOMETRY.08"]
+GEOM <- math.prog$BACKWARD[['2018']]$GEOMETRY.EOCT[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "GEOMETRY.EOCT" | is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)] #  Keep NA's for Fall to Fall checks
+GEOM <- GEOM[CONTENT_AREA_by_GRADE_PRIOR_YEAR.2 != "GEOMETRY.EOCT"]
 table(GEOM$CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)
 GEOM[COUNT > 100]  #  Major progressions
 

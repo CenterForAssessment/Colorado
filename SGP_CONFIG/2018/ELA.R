@@ -22,7 +22,8 @@ ELA_PSAT_10.2018.config <- list(
 	ELA_PSAT_10.2018 = list(
 		sgp.content.areas=c("ELA", "ELA", "ELA_PSAT_10"),
 		sgp.panel.years=c("2016", "2017", "2018"),
-		sgp.grade.sequences=list(c("8", "9", "10")))
+		sgp.grade.sequences=list(c("8", "9", "10")),
+		sgp.projection.grade.sequences=list("NO_PROJECTIONS"))
 )
 
 ELA_SAT.2018.config <- list(
