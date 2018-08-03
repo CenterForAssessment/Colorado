@@ -20,7 +20,7 @@ ALGEBRA_I.2018.config <- list(
 		sgp.grade.sequences=list(c("6", "7", "EOCT")),
 		sgp.projection.grade.sequences=list("NO_PROJECTIONS"),
 		sgp.norm.group.preference=0L), ### CANONICAL progression
-	ALGEBRA_I.2018 = list(
+	ALGEBRA_I.2018 = list( #  --  <2000 :: Include for SGP_NOTE
 		sgp.content.areas=c("MATHEMATICS", "MATHEMATICS", "ALGEBRA_I"),
 		sgp.panel.years=c("2016", "2017", "2018"),
 		sgp.grade.sequences=list(c("5", "6", "EOCT")),
@@ -58,7 +58,7 @@ MATHEMATICS_PSAT_9.2018.config <- list(
 		sgp.projection.grade.sequences=list("NO_PROJECTIONS"),
 		sgp.norm.group.preference=1L),
 
-	MATHEMATICS_PSAT_9.2018 = list(  #  --  <2000 :: Include for SGP_NOTE
+	MATHEMATICS_PSAT_9.2018 = list(  #  --  <2000 :: Include for SGP_NOTE (2 priors - still enough for single prior with GEOM)
 		sgp.content.areas=c("ALGEBRA_I", "GEOMETRY", "MATHEMATICS_PSAT_9"),
 		sgp.panel.years=c("2016", "2017", "2018"),
 		sgp.grade.sequences=list(c("EOCT", "EOCT", "9")),
@@ -125,17 +125,17 @@ MATHEMATICS_SAT.2018.config <- list(
 		sgp.projection.grade.sequences=list("NO_PROJECTIONS"),
 		sgp.norm.group.preference=2L),
 
-		MATHEMATICS_SAT.2018 = list(
-			sgp.content.areas=c("ALGEBRA_II.EOCT", "MATHEMATICS_PSAT_10", "MATHEMATICS_SAT"),
-			sgp.panel.years=c("2016", "2017", "2018"),
-			sgp.grade.sequences=list(c("EOCT", "10", "11")),
-			sgp.exact.grade.progression=TRUE,
-			sgp.projection.grade.sequences=list("NO_PROJECTIONS"),
-			sgp.norm.group.preference=3L),
+	MATHEMATICS_SAT.2018 = list(
+		sgp.content.areas=c("ALGEBRA_II", "MATHEMATICS_PSAT_10", "MATHEMATICS_SAT"),
+		sgp.panel.years=c("2016", "2017", "2018"),
+		sgp.grade.sequences=list(c("EOCT", "10", "11")),
+		sgp.exact.grade.progression=TRUE,
+		sgp.projection.grade.sequences=list("NO_PROJECTIONS"),
+		sgp.norm.group.preference=3L),
 
 	MATHEMATICS_SAT.2018 = list(
 		sgp.content.areas=c("MATHEMATICS_PSAT_10", "MATHEMATICS_SAT"),
-		sgp.panel.years=c("2016", "2018"),
+		sgp.panel.years=c("2017", "2018"),
 		sgp.grade.sequences=list(c("10", "11")),
 		sgp.norm.group.preference=4L)
 )

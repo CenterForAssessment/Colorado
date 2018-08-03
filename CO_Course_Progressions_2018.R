@@ -14,7 +14,7 @@ load("Data/Colorado_Data_LONG.Rdata")
 ids <- unique(Colorado_Data_LONG[YEAR=="2018", ID])
 Subset_Data_LONG <- Colorado_Data_LONG[ID %in% ids,]
 
-
+##  Create list of 2018 course progressions by content domains.
 ela.prog <- SGP::courseProgressionSGP(Subset_Data_LONG[grepl("ELA", CONTENT_AREA)], lag.direction="BACKWARD", year='2018')
 math.prog<- SGP::courseProgressionSGP(Subset_Data_LONG[!grepl("ELA|SLA", CONTENT_AREA)], lag.direction="BACKWARD", year='2018')
 
@@ -28,8 +28,7 @@ names(math.prog$BACKWARD[['2018']])
 
 ###   Algebra I (No Repeaters or Regression)
 
-ALG1 <- math.prog$BACKWARD[['2018']]$ALGEBRA_I.EOCT[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "ALGEBRA_I.EOCT" | is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)] #  Keep NA's for Fall to Fall checks
-ALG1 <- ALG1[CONTENT_AREA_by_GRADE_PRIOR_YEAR.2 != "ALGEBRA_I.EOCT"]
+ALG1 <- math.prog$BACKWARD[['2018']]$ALGEBRA_I.EOCT[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "ALGEBRA_I.EOCT"]
 table(ALG1$CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)
 ALG1[COUNT > 100]  #  Major progressions
 
@@ -37,13 +36,13 @@ ALG1[COUNT > 100]  #  Major progressions
 ALG1[, list(Total=sum(COUNT)), keyby="CONTENT_AREA_by_GRADE_PRIOR_YEAR.1"][!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)]
 # CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 Total
 # 1:             INTEGRATED_MATH_1.EOCT     1
-# 2:                     MATHEMATICS.06   894
-# 3:                     MATHEMATICS.07  5883  #  YES
+# 2:                     MATHEMATICS.06   936
+# 3:                     MATHEMATICS.07  6305  #  YES
 # 4:                     MATHEMATICS.08     2
 
 
 ###   Viable 2 Prior (Spring 17 + Spring 16) ALGEBRA_I Progressions
-ALG1[!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1), list(Total=sum(COUNT)), keyby=c("CONTENT_AREA_by_GRADE_PRIOR_YEAR.1", "CONTENT_AREA_by_GRADE_PRIOR_YEAR.2")][Total > 100]
+ALG1[!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1) & !is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.2), list(Total=sum(COUNT)), keyby=c("CONTENT_AREA_by_GRADE_PRIOR_YEAR.1", "CONTENT_AREA_by_GRADE_PRIOR_YEAR.2")][Total > 100]
 #    CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 CONTENT_AREA_by_GRADE_PRIOR_YEAR.2 Total
 # 1:                     MATHEMATICS.06                     MATHEMATICS.05   892
 # 2:                     MATHEMATICS.07                     MATHEMATICS.06  5878
@@ -53,16 +52,15 @@ ALG1[!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1), list(Total=sum(COUNT)), keyby=c
 
 ###   Geometry (No Repeaters)
 
-GEOM <- math.prog$BACKWARD[['2018']]$GEOMETRY.EOCT[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "GEOMETRY.EOCT" | is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)] #  Keep NA's for Fall to Fall checks
-GEOM <- GEOM[CONTENT_AREA_by_GRADE_PRIOR_YEAR.2 != "GEOMETRY.EOCT"]
+GEOM <- math.prog$BACKWARD[['2018']]$GEOMETRY.EOCT[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "GEOMETRY.EOCT"]
 table(GEOM$CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)
 GEOM[COUNT > 100]  #  Major progressions
 
 ###   Viable 1 Prior (Spring 17) GEOMETRY Progressions
 GEOM[, list(Total=sum(COUNT)), keyby="CONTENT_AREA_by_GRADE_PRIOR_YEAR.1"][!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)]
 # CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 Total
-# 1:                     ALGEBRA_I.EOCT  1418
-# 2:                     MATHEMATICS.07    73
+# 1:                     ALGEBRA_I.EOCT  1493
+# 2:                     MATHEMATICS.07    79
 
 ###   Viable 2 Prior (Spring 17 + Spring 16) GEOMETRY Progressions
 GEOM[!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1) & !is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.2), list(Total=sum(COUNT)), keyby=c("CONTENT_AREA_by_GRADE_PRIOR_YEAR.1", "CONTENT_AREA_by_GRADE_PRIOR_YEAR.2")][Total > 50]
@@ -73,8 +71,7 @@ GEOM[!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1) & !is.na(CONTENT_AREA_by_GRADE_P
 
 ###   PSAT 9 MATHEMATICS
 
-PSATM <- math.prog$BACKWARD[['2018']]$MATHEMATICS_PSAT_9.09[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "MATHEMATICS_PSAT_9.09" | is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)]
-PSATM <- PSATM[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "MATHEMATICS_PSAT_9.09" & !is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)]
+PSATM <- math.prog$BACKWARD[['2018']]$MATHEMATICS_PSAT_9.09[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "MATHEMATICS_PSAT_9.09"]
 table(PSATM$CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)
 PSATM[COUNT > 500]  #  Major progressions
 
@@ -96,13 +93,12 @@ PSATM[, list(Total=sum(COUNT)), keyby="CONTENT_AREA_by_GRADE_PRIOR_YEAR.1"][!is.
 PSATM[!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1) & !is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.2), list(Total=sum(COUNT)), keyby=c("CONTENT_AREA_by_GRADE_PRIOR_YEAR.1", "CONTENT_AREA_by_GRADE_PRIOR_YEAR.2")][Total > 1500]
 #    CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 CONTENT_AREA_by_GRADE_PRIOR_YEAR.2 Total
 # 1:                     ALGEBRA_I.EOCT                     MATHEMATICS.07  7746
-# 2:                      GEOMETRY.EOCT                     ALGEBRA_I.EOCT  1809
+# 2:                      GEOMETRY.EOCT                     ALGEBRA_I.EOCT  1809 ###  XXX
 # 3:                     MATHEMATICS.08                     MATHEMATICS.07 35022
 
 ###   PSAT 10 MATHEMATICS
 
-PSATM <- math.prog$BACKWARD[['2018']]$MATHEMATICS_PSAT_10.10[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "MATHEMATICS_PSAT_10.10" | is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)] #  Keep NA's for Fall to Fall checks
-PSATM <- PSATM[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "MATHEMATICS_PSAT_10.10" & !is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)]
+PSATM <- math.prog$BACKWARD[['2018']]$MATHEMATICS_PSAT_10.10[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "MATHEMATICS_PSAT_10.10"]
 table(PSATM$CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)
 PSATM[COUNT > 500]  #  Major progressions
 
@@ -131,8 +127,7 @@ PSATM[!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1) & !is.na(CONTENT_AREA_by_GRADE_
 ###   SAT MATHEMATICS
 ###
 
-SATM <- math.prog$BACKWARD[['2018']]$MATHEMATICS_SAT.11[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "MATHEMATICS_SAT.11" | is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)] #  Keep NA's for Fall to Fall checks
-SATM <- SATM[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "MATHEMATICS_SAT.11" & !is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)]
+SATM <- math.prog$BACKWARD[['2018']]$MATHEMATICS_SAT.11[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 != "MATHEMATICS_SAT.11"]
 table(SATM$CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)
 SATM[COUNT > 500]  #  Major progressions
 
@@ -171,3 +166,71 @@ sum(ela.prog$BACKWARD[['2018']]$ELA_PSAT_10.10[CONTENT_AREA_by_GRADE_PRIOR_YEAR.
 sum(ela.prog$BACKWARD[['2018']]$ELA_SAT.11[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1=="ELA_PSAT_10.10"]$COUNT)   #  51882
 sum(ela.prog$BACKWARD[['2018']]$ELA_SAT.11[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1!="ELA_PSAT_10.10"]$COUNT)   #    298
 sum(ela.prog$BACKWARD[['2018']]$ELA_SAT.11[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1=="ELA_PSAT_10.10" & CONTENT_AREA_by_GRADE_PRIOR_YEAR.2=="ELA.09"]$COUNT) # 38290
+
+###
+###   PSAT ELA 9
+###
+
+ELA9 <- ela.prog$BACKWARD[['2018']]$ELA_PSAT_9.09
+table(ELA9$CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)
+ELA9[COUNT > 500]  #  Major progressions
+
+###   Viable 1 Prior (Spring 17) Progressions
+ELA9[, list(Total=sum(COUNT)), keyby="CONTENT_AREA_by_GRADE_PRIOR_YEAR.1"][!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)]
+#    CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 Total
+# 1:                             ELA.06   125
+# 2:                             ELA.07   169
+# 3:                             ELA.08 50794
+# 4:                             ELA.09   424
+# 5:                     ELA_PSAT_10.10    13
+# 6:                         ELA_SAT.11     1
+
+###   Viable 2 Prior (Spring 17 + Spring 16) Progressions
+ELA9[!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1) & !is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.2), list(Total=sum(COUNT)), keyby=c("CONTENT_AREA_by_GRADE_PRIOR_YEAR.1", "CONTENT_AREA_by_GRADE_PRIOR_YEAR.2")][Total > 1500]
+#    CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 CONTENT_AREA_by_GRADE_PRIOR_YEAR.2 Total
+# 1:                             ELA.08                             ELA.07 46398
+
+
+###
+###   PSAT ELA 10
+###
+
+ELA10 <- ela.prog$BACKWARD[['2018']]$ELA_PSAT_10.10
+table(ELA10$CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)
+ELA10[COUNT > 500]  #  Major progressions
+
+###   Viable 1 Prior (Spring 17) Progressions
+ELA10[, list(Total=sum(COUNT)), keyby="CONTENT_AREA_by_GRADE_PRIOR_YEAR.1"][!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)]
+#    CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 Total
+# 1:                             ELA.07     1
+# 2:                             ELA.08    14
+# 3:                             ELA.09 44448
+# 4:                     ELA_PSAT_10.10   241
+# 5:                         ELA_SAT.11    12
+
+###   Viable 2 Prior (Spring 17 + Spring 16) Progressions
+ELA10[!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1) & !is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.2), list(Total=sum(COUNT)), keyby=c("CONTENT_AREA_by_GRADE_PRIOR_YEAR.1", "CONTENT_AREA_by_GRADE_PRIOR_YEAR.2")][Total > 1500]
+#    CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 CONTENT_AREA_by_GRADE_PRIOR_YEAR.2 Total
+# 1:                             ELA.09                             ELA.08 38746
+
+
+###
+###   SAT ELA
+###
+
+SATE <- ela.prog$BACKWARD[['2018']]$ELA_SAT.11
+table(SATE$CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)
+SATE[COUNT > 500]  #  Major progressions
+
+###   Viable 1 Prior (Spring 17) Progressions
+SATE[, list(Total=sum(COUNT)), keyby="CONTENT_AREA_by_GRADE_PRIOR_YEAR.1"][!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1)]
+#    CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 Total
+# 1:                             ELA.08     1
+# 2:                             ELA.09   154
+# 3:                     ELA_PSAT_10.10 51882
+# 4:                         ELA_SAT.11   143
+
+###   Viable 2 Prior (Spring 17 + Spring 16) Progressions
+SATE[!is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.1) & !is.na(CONTENT_AREA_by_GRADE_PRIOR_YEAR.2), list(Total=sum(COUNT)), keyby=c("CONTENT_AREA_by_GRADE_PRIOR_YEAR.1", "CONTENT_AREA_by_GRADE_PRIOR_YEAR.2")][Total > 1500]
+#    CONTENT_AREA_by_GRADE_PRIOR_YEAR.1 CONTENT_AREA_by_GRADE_PRIOR_YEAR.2 Total
+# 1:                     ELA_PSAT_10.10                             ELA.09 38290
