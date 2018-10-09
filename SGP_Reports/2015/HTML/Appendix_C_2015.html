@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<title></title>
+
+
+
+
+
+<link rel="stylesheet" href="/Library/Frameworks/R.framework/Versions/3.3/Resources/library/SGPreports/rmarkdown/templates/multi_document/resources/report.css" type="text/css" />
+<link rel="stylesheet" href="/Library/Frameworks/R.framework/Versions/3.3/Resources/library/SGPreports/rmarkdown/templates/multi_document/resources/report.css" type="text/css" />
+<link rel="stylesheet" href="/Library/Frameworks/R.framework/Versions/3.3/Resources/library/SGPreports/rmarkdown/templates/multi_document/resources/report.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+<div id="TOC", class="TOC">
+<p>Table of Contents:</p>
+<ul>
+<li><a href="#introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li><a href="#prior-and-current-year-score-distributions"><span class="toc-section-number">2</span> Prior and Current Year Score Distributions</a><ul>
+<li><a href="#marginal-distributions"><span class="toc-section-number">2.1</span> Marginal Distributions</a></li>
+<li><a href="#conditional-distributions"><span class="toc-section-number">2.2</span> Conditional Distributions</a></li>
+</ul></li>
+<li><a href="#sgp-ranges-for-the-highest-and-lowest-achieving-students"><span class="toc-section-number">3</span> SGP Ranges for the Highest and Lowest Achieving Students</a><ul>
+<li><a href="#grade-level-content-areas"><span class="toc-section-number">3.1</span> Grade Level Content Areas</a></li>
+<li><a href="#eoct-content-areas"><span class="toc-section-number">3.2</span> EOCT Content Areas</a></li>
+</ul></li>
+<li><a href="#discussion"><span class="toc-section-number">4</span> Discussion</a></li>
+</ul>
+<!--
+<ul>
+<li></li>
+<li><a href="#references">References</a></li>
+<li></li>
+</ul>
+-->
+</div>
+
+<div id="document">
+
+
+<div class="content-node document selected">
+
+<div class="content">
+<div class="document-title">Appendix C to the 2015 Colorado Growth Model Report:</div>
+<div class="document-subtitle" title="">Investigation of Potential Ceiling and Floor Effects.</div>
+<div class="authors" id="authors">Adam R. VanIwaarden</div>
+<div class="authors" id="authors">Damian W. Betebenner</div>
+<div class="authors" id="authors"><em>National Center for the Improvement<br></br> of Educational Assessment (NCIEA)</em></div>
+<p class="published" style='text-indent: 0px;'>April 2016</p>
+</div>
+
+<div class="content-node section"><!--SGPreport-->
+<div id="introduction" class="section level1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<p>In the 2014-2015 academic year, Colorado transitioned from the Transitional Colorado Assessment Program (TCAP) to the <a href="https://www.cde.state.co.us/communications/factsheetsandfaqs-assessment#cmas">Colorado Measures of Academic Success (CMAS)</a>. The transition included numerous changes to the assessment system including the incorporation of new performance standards. As other states have gone through similar assessment transitions, many have observed ceiling and floor effects in the new assessments (i.e. a relatively large proportion of students scoring at/near the scale extremes). This has occurred despite purported improvements in assessment qualities that should prevent these effects (e.g. adaptive tests). Regardless of the source of assessment ceilings/floors, they can telegraph onto the Student Growth Percentile (SGP) calculations making these estimates questionable.</p>
+<p>Although very similar in nature, ceiling effects are somewhat more problematic than floor effects because students that consistently achieve the highest scores receive lower than expected growth percentiles and are therefore negatively impacted. Conversely, the consistently lowest achieving students have higher estimated SGPs than would be expected. Although this could be interpreted as a positive impact for these students by giving them higher SGPs, it can also conceal unacceptably low growth that needs to be identified and addressed.</p>
+<p>Essentially these problems are caused by the way in which a “percentile” is defined to begin with, and the inability of the assessments (and therefore the SGP model) to make granular distinctions between kids who score at the extremes of the test year after year. As an example, if a group of students were tested with a relatively easy test and 20% of the students had a perfect score, these students would be defined as being in the 80<sup>th</sup> percentile because they scored higher than 80% of their peers. This is somewhat misleading however, because their score was <em>equal to</em> or greater than 100% of their peers and so could be also described as achieving at the 99.99<sup>th</sup> percentile under an equally valid definition.</p>
+<p>To extend this heuristic from achievement to growth, if 50% of those top students also scored perfectly on the next test, we might estimate that they had 50<sup>th</sup> percentile growth. Although there is nothing <em>technically</em> incorrect about this estimate because their growth is fairly typical for their academic peer group, it is an inadequate or unsatisfactory assessment of their growth because they have consistently attained at the highest observable level. Furthermore, if it is typical for their peers to maintain perfect scores then even small deviations from a perfect score could produce <em>low growth</em> SGP estimates. Ideally, the expectation is that the majority of SGPs for students scoring at or near the lowest obtainable scale score (LOSS) will be low (preferably less than 5 and not higher than 10), and that SGPs for students with the highest obtainable scale score (HOSS) will be high (higher than 95 and not less than 90).</p>
+<p>Given these impacts and the difficulty in detecting them using traditional SGP diagnostic tools, the Center for Assessment has added “Ceiling/Test Effects” indicators to the SGP model goodness of fit plots and is providing all clients even more rigorous diagnostic and descriptive analyses through this Appendix to the annual technical report. This report includes:</p>
+<ol style="list-style-type: decimal">
+<li>Plots of the scale score distributions for the current and prior years’ tests, which may provide an indication of whether a ceiling or floor is present in either (or both) the current or historical data.</li>
+<li>Box plots showing the range and distribution of SGPs for <em>only</em> the highest and lowest achieving students in the current year.</li>
+</ol>
+<!-- HTML_Start -->
+<!-- <div class='breakboth' ></div> -->
+<!-- LaTeX_Start 
+\pagebreak
+LaTeX_End -->
+</div>
+<div id="prior-and-current-year-score-distributions" class="section level1">
+<h1><span class="header-section-number">2</span> Prior and Current Year Score Distributions</h1>
+<p>The marginal and conditional distributions of scale scores can serve as a preliminary indicator of potential ceiling or floor effects in the calculation of student growth percentiles. Some minor problems could present themselves if these characteristics are present in either prior or current year scores, and are particularly likely when present in both. The plots below depict distributions for the current year and the most recent prior year used in the SGP calculations. The marginal (individual or univariate) distributions for each year are shown in the first subsections below, followed by the conditional (joint) distributions. Each content area plots are disaggregated by grade.</p>
+<div id="marginal-distributions" class="section level2">
+<h2><span class="header-section-number">2.1</span> Marginal Distributions</h2>
+<p>Generally there is little evidence of floor/ceiling effects in the TCAP prior scores. When present, these effects appear either as sharp spikes at the extremes of the distributions or as fat, truncated tails.</p>
+<p>The CMAS scores are truncated at the floor in some grades and end-of-course test (EOCT) subjects. This could potentially translate to floor effects in growth analyses. No evidence of ceiling effects are present in the marginal distributions alone.</p>
+<div id="ela" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> ELA</h3>
+<!-- HTML_Start -->
+<div id="fig.-c.1-marginal-distributions-of-prior-scale-scores-reading." class="section level5">
+<h5> <strong>Fig. C.1:</strong> Marginal distributions of prior scale scores: Reading.</h5>
+<div class="figure">
+<img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/margDist_Prior-1.png" alt="" />
+
+</div>
+</div>
+<div id="fig.-c.2-marginal-distributions-of-prior-scale-scores-writing." class="section level5">
+<h5> <strong>Fig. C.2:</strong> Marginal distributions of prior scale scores: Writing.</h5>
+<div class="figure">
+<img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/margDist_Prior-2.png" alt="" />
+
+</div>
+</div>
+<div id="fig.-c.3-marginal-distributions-of-current-scale-scores-ela." class="section level5">
+<h5> <strong>Fig. C.3:</strong> Marginal distributions of current scale scores: ELA.</h5>
+<div class="figure">
+<img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/margDist_Crnt-1.png" alt="" />
+
+</div>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:Bidensity} {\bf{Fig. C.1:}} Marginal distributions of prior scale scores: Reading.}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/margDist_Prior-1.png}
+  \end{subfigure}
+\end{figure}
+
+\begin{figure}[H]
+\caption*{\label{fig:Bidensity} {\bf{Fig. C.2:}} Marginal distributions of prior scale scores: Writing}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/margDist_Prior-2.png}
+  \end{subfigure}
+\end{figure}
+
+\begin{figure}[H]
+\caption*{\label{fig:Bidensity} {\bf{Fig. C.3:}} Marginal distributions of current scale scores: ELA.}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/margDist_Crnt-1.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+</div>
+</div>
+<div id="mathematics" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Mathematics</h3>
+<!-- HTML_Start -->
+<div id="fig.-c.4-marginal-distributions-of-prior-scale-scores-mathematics." class="section level5">
+<h5> <strong>Fig. C.4:</strong> Marginal distributions of prior scale scores: Mathematics.</h5>
+<div class="figure">
+<img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/margDist_Prior-3.png" alt="" />
+
+</div>
+</div>
+<div id="fig.-c.5-marginal-distributions-of-current-scale-scores-mathematics." class="section level5">
+<h5> <strong>Fig. C.5:</strong> Marginal distributions of current scale scores: Mathematics.</h5>
+<div class="figure">
+<img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/margDist_Crnt-2.png" alt="" />
+
+</div>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:Bidensity} {\bf{Fig. C.4:}} Marginal distributions of prior scale scores: Mathematics.}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/margDist_Prior-2.png}
+  \end{subfigure}
+\end{figure}
+
+\begin{figure}[H]
+\caption*{\label{fig:Bidensity} {\bf{Fig. C.5:}} Marginal distributions of current scale scores: Mathematics.}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/margDist_Crnt-2.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+</div>
+</div>
+<div id="end-of-course-test-subjects" class="section level3">
+<h3><span class="header-section-number">2.1.3</span> End-of-Course Test Subjects</h3>
+<p>Only the current year distributions are presented here because this is the first year of CMAS testing in EOCT subjects in Colorado.</p>
+<!-- HTML_Start -->
+<div id="fig.-c.6-marginal-distributions-of-current-scale-scores-end-of-course-subjects." class="section level5">
+<h5> <strong>Fig. C.6:</strong> Marginal distributions of current scale scores: End-of-Course Subjects.</h5>
+<div class="figure">
+<img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/margDist_Crnt-3.png" alt="" />
+
+</div>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:Bidensity} {\bf{Fig. C.6:}} Marginal distributions of current scale scores: End-of-Course Subjects.}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/margDist_Crnt-3.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+</div>
+</div>
+</div>
+<div id="conditional-distributions" class="section level2">
+<h2><span class="header-section-number">2.2</span> Conditional Distributions</h2>
+<p>The marginal density plots provide a limited amount of information, particularly for the potential for ceiling/floor effects in the calculation of <strong><em>growth</em></strong>. In order to provide a more nuanced view of the relationship between the prior and current scale scores, the following plots depict the conditional (joint) distributions for each content area and grade level. These plots start with a basic scatter plot of each student’s scores, and on top of this is layered 1) <strong>green contour lines</strong> to provide a sense of the joint density, 2) a <strong>magenta non-linear line</strong> identifying the bivariate relationship between prior and current scores, and 3) <strong>rug plots</strong> that describe the marginal distributions (as above, the prior scores are blue and current scores are red).</p>
+<p>Ceiling or floor effects often appear as dark shaded points in the extreme top-right or bottom-left corners of the plots. This suggests that staying at the extremes from year to year is not uncommon, which may lead to odd growth estimates for these chronically high/low achieving students. For the 2014 and 2015 Colorado data, we begin to see concerning indicators in most content area and grade combinations. Along with the tell-tale points in the extremes, we also see situations in some EOCT course progressions where data is sparse in the upper extremes. In these cases there can also be ceiling impacts for the one or two outliers with consistently high achievement (see for example the bottom left panel of Figure C.11 for Algebra I with 9<sup>th</sup> grade math priors).</p>
+<div id="ela-1" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> ELA</h3>
+<!-- HTML_Start -->
+<div id="fig.-c.7-conditional-distributions-of-current-and-prior-scale-scores-ela." class="section level6">
+<h6> <strong>Fig. C.7:</strong> Conditional distribution(s) of current and prior scale scores: ELA.</h6>
+<p><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOGT-1.png" alt="" /> <img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOGT-2.png" alt="" /></p>
+</div>
+<div id="fig.-c.8-conditional-distributions-of-current-and-prior-scale-scores-ela-continued." class="section level6">
+<h6> <strong>Fig. C.8:</strong> Conditional distribution(s) of current and prior scale scores: ELA <em>Continued</em>.</h6>
+<p><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOGT-3.png" alt="" /> <img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOGT-4.png" alt="" /> <img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOGT-5.png" alt="" /> <img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOGT-6.png" alt="" /> <img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOGT-7.png" alt="" /> <img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOGT-8.png" alt="" /></p>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:condDistELA} {\bf{Fig. C.7:}} Conditional distribution(s) of current and prior scale scores: ELA.}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOGT-1.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOGT-2.png}
+  \end{subfigure}
+\end{figure}
+
+\begin{figure}[H]
+\caption*{\label{fig:condDistELA2} {\bf{Fig. C.8:}} Conditional distribution(s) of current and prior scale scores: ELA \textit{Continued}.}
+  \begin{subfigure}[b]{0.475\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOGT-3.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.475\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOGT-4.png}
+  \end{subfigure}
+  %
+  \begin{subfigure}[b]{0.475\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOGT-5.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.475\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOGT-6.png}
+  \end{subfigure}
+  %
+  \begin{subfigure}[b]{0.475\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOGT-7.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.475\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOGT-8.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+
+LaTeX_End -->
+</div>
+</div>
+<div id="mathematics-1" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Mathematics</h3>
+<!-- HTML_Start -->
+<div id="fig.-c.9-conditional-distributions-of-current-and-prior-scale-scores-mathematics." class="section level5">
+<h5> <strong>Fig. C.9:</strong> Conditional distribution(s) of current and prior scale scores: Mathematics.</h5>
+<p><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOGT-9.png" alt="" /> <img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOGT-10.png" alt="" /> <img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOGT-11.png" alt="" /> <img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOGT-12.png" alt="" /> <img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOGT-13.png" alt="" /></p>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:condDistMath} {\bf{Fig. C.9:}} Conditional distribution(s) of current and prior scale scores: Mathematics.}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOGT-9.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOGT-10.png}
+  \end{subfigure}
+  %
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOGT-11.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOGT-12.png}
+  \end{subfigure}
+  %
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOGT-13.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+</div>
+</div>
+<div id="end-of-course-test-subjects-1" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> End-of-Course Test Subjects</h3>
+<p>The conditional density plots for the EOCT subjects are displayed below. The most recent prior is used in each plot to provide insight on each academic peer (norm) group that were analyzed separately. Note the bottom left plot in Figure C.11 below for Algebra I, particularly the point in the upper-right hand area of the plot. This is a potential indicator for a ceiling effect issue. Several other individual plots in other subjects also display a similar indicators.</p>
+<!-- HTML_Start -->
+<div id="fig.-c.10-conditional-distributions-of-current-and-prior-scale-scores-algebra-i." class="section level5">
+<h5> <strong>Fig. C.10:</strong> Conditional distribution(s) of current and prior scale scores: Algebra I.</h5>
+<p><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOCT-1.png" alt="" /> <img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOCT-3.png" alt="" /> <img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOCT-2.png" alt="" /></p>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:condDistG9L} {\bf{Fig. C.11:}} Conditional distribution(s) of current and prior scale scores: Algebra I.}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOCT-1.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOCT-2.png}
+  \end{subfigure}
+  %
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOCT-3.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+<!-- HTML_Start -->
+</div>
+<div id="fig.-c.11-conditional-distributions-of-current-and-prior-scale-scores-algebra-ii." class="section level5">
+<h5> <strong>Fig. C.11:</strong> Conditional distribution(s) of current and prior scale scores: Algebra II.</h5>
+<p><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOCT-4.png" alt="" /> <img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOCT-5.png" alt="" /></p>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:condDistG9L} {\bf{Fig. C.12:}} Conditional distribution(s) of current and prior scale scores: Algebra II.}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOCT-4.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOCT-5.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+<!-- HTML_Start -->
+</div>
+<div id="fig.-c.12-conditional-distributions-of-current-and-prior-scale-scores-geometry." class="section level5">
+<h5> <strong>Fig. C.12:</strong> Conditional distribution(s) of current and prior scale scores: Geometry.</h5>
+<p><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOCT-6.png" alt="" /> <img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOCT-7.png" alt="" /> <img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOCT-8.png" alt="" /></p>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:condDistG9L} {\bf{Fig. C.13:}} Conditional distribution(s) of current and prior scale scores: Geometry.}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOCT-6.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOCT-7.png}
+  \end{subfigure}
+  %
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOCT-8.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+<!-- HTML_Start -->
+</div>
+<div id="fig.-c.13-conditional-distributions-of-current-and-prior-scale-scores-integrated-math-1." class="section level5">
+<h5> <strong>Fig. C.13:</strong> Conditional distribution(s) of current and prior scale scores: Integrated Math 1.</h5>
+<div class="figure">
+<img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOCT-9.png" alt="" />
+
+</div>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:condDistG9L} {\bf{Fig. C.14:}} Conditional distribution(s) of current and prior scale scores: Integrated Math 1.}
+  \begin{subfigure}[b]{0.75\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOCT-9.png}
+  \end{subfigure}
+\end{figure}
+
+LaTeX_End -->
+<!-- HTML_Start -->
+</div>
+<div id="fig.-c.14-conditional-distributions-of-current-and-prior-scale-scores-integrated-math-2." class="section level5">
+<h5> <strong>Fig. C.14:</strong> Conditional distribution(s) of current and prior scale scores: Integrated Math 2.</h5>
+<div class="figure">
+<img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOCT-10.png" alt="" />
+
+</div>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:condDistG9L} {\bf{Fig. C.15:}} Conditional distribution(s) of current and prior scale scores: Integrated Math 2.}
+  \begin{subfigure}[b]{0.75\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOCT-10.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+<!-- HTML_Start -->
+</div>
+<div id="fig.-c.15-conditional-distributions-of-current-and-prior-scale-scores-integrated-math-3." class="section level5">
+<h5> <strong>Fig. C.15:</strong> Conditional distribution(s) of current and prior scale scores: Integrated Math 3.</h5>
+<div class="figure">
+<img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/condDist_EOCT-11.png" alt="" />
+
+</div>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:condDistG9L} {\bf{Fig. C.16:}} Conditional distribution(s) of current and prior scale scores: Integrated Math 3.}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/condDist_EOCT-11.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+</div>
+</div>
+</div>
+</div>
+<div id="sgp-ranges-for-the-highest-and-lowest-achieving-students" class="section level1">
+<h1><span class="header-section-number">3</span> SGP Ranges for the Highest and Lowest Achieving Students</h1>
+<p>In order to isolate the impact of assessment ceilings/floors on student growth percentile (SGP) calculations, the following section provides box plots of the distribution of SGPs for the highest and lowest achieving students. We are specifically interested in the SGPs for students scoring at the highest/lowest obtainable scale score (HOSS/LOSS - i.e. the actual ceiling/floor). However, in order to assure that an adequate number of students are included, the first set of plots in each subsection uses, at a <em>minimum</em>, the highest/lowest 50 scores. Note that this roughly corresponds to the number of students used in the SGP model goodness of fit plots, and this is why these plots are provided as a starting point for this part of the investigation. All students with a score in these students’ range of scores are included. Consequently, the number of students in each box plot may be greater than 50 (the exact number is shown at the margins in red text).</p>
+<p>The second set of box plots in the following subsections isolate <strong><em>only</em></strong> those students scoring the HOSS/LOSS. These plots may then incorporate a widely varying number of students depending on the prevalence of a ceiling/floor in the current year.</p>
+<p>The box plots provide several descriptive statistics. The dark line within the box marks the <em>median</em> SGP, while the ends (“hinges”) of the boxes correspond to the first and third quartiles (the 25<sup>th</sup> and 75<sup>th</sup> percentiles). The upper whisker extends from the hinge to the highest value that is within 1.5 <span class="math inline">×</span> IQR of the hinge, where IQR is the inter-quartile range, or distance between the first and third quartiles. The lower whisker extends from the hinge to the lowest value within 1.5 <span class="math inline">×</span> IQR of the hinge. Data beyond the end of the whiskers are outliers and plotted as points. Evidence of a <em>lack</em> of either a ceiling or floor effect would be to have all high achieving students with SGPs near 99 and all low achieving students with SGPs near 1. That is, the desired visual evidence is a solid line at SGP = 99/1.</p>
+<p>The grade level results show considerable ceiling effects for ELA as well as 8<sup>th</sup> grade mathematics with many students’ SGPs well below 90. There is also evidence of floor effects in these content areas, although this is not as strong as the ceiling (mainly outlier students with an SGP above 10).</p>
+<div id="grade-level-content-areas" class="section level2">
+<h2><span class="header-section-number">3.1</span> Grade Level Content Areas</h2>
+<!-- HTML_Start -->
+<div id="fig.-c.16-sgp-distributions-for-highest-and-lowest-50-scale-scores-by-content-area-and-grade-level." class="section level5">
+<h5> <strong>Fig. C.16:</strong> SGP distributions for highest and lowest 50+ scale scores by content area and grade level.</h5>
+<div class="figure">
+<img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/HOSS_Box_EOGT-1.png" alt="" />
+
+</div>
+</div>
+<div id="fig.-c.17-sgp-distributions-for-the-hoss-and-loss-scores-by-content-area-and-grade-level." class="section level5">
+<h5> <strong>Fig. C.17:</strong> SGP distributions for the HOSS and LOSS scores by content area and grade level.</h5>
+<div class="figure">
+<img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/HOSS_Box_EOGT-2.png" alt="" />
+
+</div>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:boxPlotEOGT} {\bf{Fig. C.17:}} SGP distributions for highest and lowest 50+ scale scores by content area and grade level.}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/HOSS_Box_EOGT-1.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/LOSS_Box_EOGT-1.png}
+  \end{subfigure}
+\end{figure}
+
+\begin{figure}[H]
+\caption*{\label{fig:boxPlotEOGT2} {\bf{Fig. C.18:}} SGP distributions for the HOSS and LOSS scores by content area and grade level.}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/HOSS_Box_EOGT-2.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/LOSS_Box_EOGT-2.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+</div>
+</div>
+<div id="eoct-content-areas" class="section level2">
+<h2><span class="header-section-number">3.2</span> EOCT Content Areas</h2>
+<p>The end-of-course subject results are shown here for <em>only</em> the LOSS and HOSS students. There are several subjects for which potential ceiling and floor effects are evident. These subjects are disaggregated further in order to more appropriately address these concerns.</p>
+<!-- HTML_Start -->
+<div id="fig.-c.18-eoct-sgp-distributions-for-the-hoss-and-loss-scores-by-content-area." class="section level5">
+<h5> <strong>Fig. C.18:</strong> EOCT SGP distributions for the HOSS and LOSS scores by content area.</h5>
+<div class="figure">
+<img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/HOSS_Box_EOCT-1.png" alt="" />
+
+</div>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:Bidensity} {\bf{Fig. C.19:}} EOCT SGP distributions for the HOSS and LOSS scores by content area.}
+  \begin{subfigure}[b]{0.95\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/HOSS_Box_EOCT-1.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.95\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/LOSS_Box_EOCT-1.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+<p>The end-of-course box plots can be disaggregated further by the most recent prior (i.e. their primary constituent norm groups). The following box plots disaggregate each EOCT subject by norm groups. The most serious ceiling impact can be seen in the Algebra I progression with 9<sup>th</sup> grade mathematics as the most recent prior. Of the two students scoring the HOSS, one received an SGP of 1 and the other 51. These students were very high achieving outliers in their cohorts (as shown in Figure C.11 above), and consequently the SGP model was unable to make acceptable estimates for their growth.</p>
+<!-- HTML_Start -->
+</div>
+<div id="fig.-c.19-sgp-distributions-for-the-hoss-and-loss-scores-by-norm-group-algebra-i." class="section level5">
+<h5> <strong>Fig. C.19:</strong> SGP distributions for the HOSS and LOSS scores by norm group: Algebra I.</h5>
+<p><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/HOSS_Box_EOCT-2.png" alt="" /><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/LOSS_Box_EOCT-2.png" alt="" /></p>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:bpG9L} {\bf{Fig. C.20:}} SGP distributions for the HOSS and LOSS scores by norm group: Algebra I.}
+  \begin{subfigure}[b]{0.925\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/HOSS_Box_EOCT-2.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.925\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/LOSS_Box_EOCT-2.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+<!-- HTML_Start -->
+</div>
+<div id="fig.-c.20-sgp-distributions-for-the-hoss-and-loss-scores-by-norm-group-algebra-ii." class="section level5">
+<h5> <strong>Fig. C.20:</strong> SGP distributions for the HOSS and LOSS scores by norm group: Algebra II.</h5>
+<p><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/HOSS_Box_EOCT-3.png" alt="" /><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/LOSS_Box_EOCT-3.png" alt="" /></p>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:bpAML} {\bf{Fig. C.21:}} SGP distributions for the HOSS and LOSS scores by norm group: Algebra II.}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/HOSS_Box_EOCT-3.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/LOSS_Box_EOCT-3.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+<!-- HTML_Start -->
+</div>
+<div id="fig.-c.21-eoct-sgp-distributions-for-the-hoss-and-loss-scores-by-norm-group-geometry." class="section level5">
+<h5> <strong>Fig. C.21:</strong> EOCT SGP distributions for the HOSS and LOSS scores by norm group: Geometry.</h5>
+<p><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/HOSS_Box_EOCT-4.png" alt="" /><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/LOSS_Box_EOCT-4.png" alt="" /></p>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:bpUSH} {\bf{Fig. C.22:}} EOCT SGP distributions for the HOSS and LOSS scores by norm group: Geometry.}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/HOSS_Box_EOCT-4.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/LOSS_Box_EOCT-4.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+<!-- HTML_Start -->
+</div>
+<div id="fig.-c.22-eoct-sgp-distributions-for-the-hoss-and-loss-scores-by-norm-group-integrated-math-1." class="section level5">
+<h5> <strong>Fig. C.22:</strong> EOCT SGP distributions for the HOSS and LOSS scores by norm group: Integrated Math 1.</h5>
+<p><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/HOSS_Box_EOCT-5.png" alt="" /><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/LOSS_Box_EOCT-5.png" alt="" /></p>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:bpEcon} {\bf{Fig. C.23:}} EOCT SGP distributions for the HOSS and LOSS scores by norm group: Integrated Math 1.}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/HOSS_Box_EOCT-5.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/LOSS_Box_EOCT-5.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+<!-- HTML_Start -->
+</div>
+<div id="fig.-c.23-eoct-sgp-distributions-for-the-hoss-and-loss-scores-by-norm-group-integrated-math-2." class="section level5">
+<h5> <strong>Fig. C.23:</strong> EOCT SGP distributions for the HOSS and LOSS scores by norm group: Integrated Math 2.</h5>
+<p><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/HOSS_Box_EOCT-6.png" alt="" /><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/LOSS_Box_EOCT-6.png" alt="" /></p>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:bpBio} {\bf{Fig. C.24:}} EOCT SGP distributions for the HOSS and LOSS scores by norm group: Integrated Math 2.}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=0.93\textwidth]{../img/Appendices/Appendix_C_2015/HOSS_Box_EOCT-6.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=0.93\textwidth]{../img/Appendices/Appendix_C_2015/LOSS_Box_EOCT-6.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+<!-- HTML_Start -->
+</div>
+<div id="fig.-c.24-eoc-sgp-distributions-for-the-hoss-and-loss-scores-by-norm-group-integrated-math-3." class="section level5">
+<h5> <strong>Fig. C.24:</strong> EOC SGP distributions for the HOSS and LOSS scores by norm group: Integrated Math 3.</h5>
+<p><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/HOSS_Box_EOCT-7.png" alt="" /><img src="/Users/avi/Dropbox%20(SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/img/Appendices/Appendix_C_2015/LOSS_Box_EOCT-7.png" alt="" /></p>
+<!-- LaTeX_Start 
+\begin{figure}[H]
+\caption*{\label{fig:bpPhySci} {\bf{Fig. C.25:}} EOC SGP distributions for the HOSS and LOSS scores by norm group: Integrated Math 3.}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/HOSS_Box_EOCT-7.png}
+  \end{subfigure}
+  \begin{subfigure}[b]{\textwidth}
+    \includegraphics[width=\textwidth]{../img/Appendices/Appendix_C_2015/LOSS_Box_EOCT-7.png}
+  \end{subfigure}
+\end{figure}
+
+\pagebreak
+LaTeX_End -->
+</div>
+</div>
+</div>
+<div id="discussion" class="section level1">
+<h1><span class="header-section-number">4</span> Discussion</h1>
+<p>Overall there is substantial evidence of both floor or ceiling effects in the 2015 Colorado SGP analyses. Both grade level and end-of-course test subjects are impacted to some degree.</p>
+<p>When ceiling or floor effects are encountered, there are several ways in which they can be “corrected” manually or analytically. These include (but not limited to):</p>
+<ol style="list-style-type: decimal">
+<li>Convert all students scoring at the HOSS (LOSS) to 99 (1).</li>
+<li>Run SGP analyses with more granular scores. For example, many tests that use Item Response Theory (IRT) to analyse test results provide scaled scores that enforce an artificial ceiling (floor), but also have more granular achievement scores available (IRT <span class="math inline"><em>θ</em></span> estimates).</li>
+<li>Leave the results without a correction.</li>
+</ol>
+<div id="refs" class="references">
+
+</div>
+</div></div>
+
+</div>
+
+
+
+</body>
+</html>
