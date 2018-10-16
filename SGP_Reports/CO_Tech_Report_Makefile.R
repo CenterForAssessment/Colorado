@@ -5,16 +5,33 @@
 ### Load required packages
 
 require(SGP)
+require(Literasee)
 require(data.table)
 
-setwd("/Users/avi/Dropbox (SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/2015")
+setwd("/Users/avi/Dropbox (SGP)/Github_Repos/Documentation/Colorado/SGP_Reports/2018")
 
-# load("/Users/avi/Dropbox (SGP)/SGP/Colorado/Data/Colorado_SGP.Rdata")
-load("../../Colorado_SGP.Rdata")
+load("/Users/avi/Dropbox (SGP)/SGP/Colorado/Data/Colorado_SGP.Rdata")
 
 Colorado_SGP@Data$Most_Recent_Prior <- as.character(NA)
 Colorado_SGP@Data[, Most_Recent_Prior := sapply(strsplit(as.character(Colorado_SGP@Data$SGP_NORM_GROUP), "; "), function(x) rev(x)[2])]
 
+
+renderMultiDocument(rmd_input = "Colorado_SGP_Report_2018.Rmd",
+										report_format = c("HTML", "PDF"),
+										# cover_img="../img/cover.jpg",
+										# add_cover_title=TRUE, 
+										# cleanup_aux_files = FALSE,
+										pandoc_args = "--webtex")
+
+renderMultiDocument(rmd_input = "Appendix_A_2018.Rmd",
+										report_format = c("HTML", "PDF"))
+
+renderMultiDocument(rmd_input = "Appendix_B.Rmd",
+										report_format = c("HTML", "PDF"),
+										pandoc_args = "--webtex")
+
+renderMultiDocument(rmd_input = "Appendix_C_2018.Rmd",
+										report_format = c("HTML", "PDF"))
 
 
 

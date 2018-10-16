@@ -12,13 +12,13 @@ date: October 2018
 
 <!--SGPreport-->
 
-
 ```{r, echo=FALSE, include=FALSE}
   ## set a universal Cache path
   knitr::opts_chunk$set(cache.path = "_cache/Appendix_B_2018")
 
   ##  Set Table, Figure and Equation Counters
-  options(table_number=0)
+	options(table_counter=FALSE)
+	options(table_number=0)
   options(table_counter_str = "<strong>Table B.%s:</strong> ")
   options("fig_caption_no"=0)
   options(fig_caption_no_sprintf = "**Fig. B.%s:** %s")

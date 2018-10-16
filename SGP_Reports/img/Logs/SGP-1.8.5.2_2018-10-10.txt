@@ -1,0 +1,2 @@
+	NOTE: ELA Grade 5 data does not include ACHIEVEMENT_LEVEL_PRIOR variable. Prior Achievement Level plot panel will not be included in goodness of fit plot.
+	NOTE: MATHEMATICS_PSAT_9 Grade 9 data does not include ACHIEVEMENT_LEVEL_PRIOR variable. Prior Achievement Level plot panel will not be included in goodness of fit plot.
