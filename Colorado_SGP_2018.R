@@ -65,48 +65,16 @@ table(Colorado_SGP@Summary$SCHOOL_NUMBER$SCHOOL_NUMBER__CONTENT_AREA__YEAR__GRAD
 save(Colorado_SGP, file="Data/Colorado_SGP.Rdata")
 
 
+###  visualizeSGP for bubblePlot and growthAchievementPlot
 
-###   Step 3.  Produce ISRs
-
-load("~/Dropbox (SGP)/SGP/Colorado/Data/Colorado_SGP.Rdata")
-require(SGP)
-require(data.table)
-
-
-###   Get a subset of data with just the 2018 PSAT/SAT kids.
-###   Necessary for now until we integrate ability to use two different cover pages.
-
-SATs <- c('ELA_PSAT_9', 'ELA_PSAT_10', 'ELA_SAT', 'MATHEMATICS_PSAT_9', 'MATHEMATICS_PSAT_10', 'MATHEMATICS_SAT')
-ids <- unique(Colorado_SGP@Data[YEAR=='2018' & GRADE %in% c(9,10,11) & CONTENT_AREA %in% SATs, ID])
-exclude.ids <- unique(Colorado_SGP@Data[YEAR=='2018' & !GRADE %in% c(9,10,11) & !CONTENT_AREA %in% SATs, ID])
-test.ids <- ids[!ids %in% exclude.ids]
-length(test.ids)
-Colorado_SGP@Data <- Colorado_SGP@Data[ID %in% test.ids,]  #  & CONTENT_AREA %in% SATs - nope - need priors duh
-table(Colorado_SGP@Data[, YEAR, CONTENT_AREA])
-# table(Colorado_SGP@Data[YEAR=='2018' & CONTENT_AREA == "ELA", GRADE])
-
-###   Re-configure course sequences for transition year ISRs
-###   This is probably required for all such transitions, so might be something we want to include in
-###   SGPstateData[["CO"]][["Assessment_Program_Information"]][["Assessment_Transition"]]  ???
-
-SGPstateData[["CO"]][["SGP_Configuration"]][["grade.projection.sequence"]][["ELA"]] <- c("3", "4", "5", "6", "7", "8", "9", "9", "10", "11")
-SGPstateData[["CO"]][["SGP_Configuration"]][["grade.projection.sequence"]][["MATHEMATICS"]] <- c("3", "4", "5", "6", "7", "8", "EOCT", "9", "10", "11")
-
-SGPstateData[["CO"]][["SGP_Configuration"]][["content_area.projection.sequence"]][["ELA"]] <- c(rep("ELA", 7), "ELA_PSAT_9", "ELA_PSAT_10", "ELA_SAT")
-SGPstateData[["CO"]][["SGP_Configuration"]][["content_area.projection.sequence"]][["MATHEMATICS"]] <- c(rep("MATHEMATICS", 6), "ALGEBRA_I", "MATHEMATICS_PSAT_9", "MATHEMATICS_PSAT_10", "MATHEMATICS_SAT")
-
-SGPstateData[["CO"]][["SGP_Configuration"]][["year_lags.projection.sequence"]][["ELA"]] <- rep(1L, 9)
-SGPstateData[["CO"]][["SGP_Configuration"]][["year_lags.projection.sequence"]][["MATHEMATICS"]] <- rep(1L, 9)
-
-
-visualizeSGP(
-	Colorado_SGP,
-	plot.types=c("studentGrowthPlot"),
-	sgPlot.demo.report = TRUE,  #  Only use for producing a test set of plots!
-	# sgPlot.front.page = "Visualizations/Misc/2018_CMAS_ISR_Cover_Page.pdf", # RENAME FILE (Dan's has spaces in name)
-	sgPlot.front.page = "Visualizations/Misc/2018_PSATSAT_ISR_Cover_Page.pdf", # Introduction to the report.  File path is relative to the working directory.
-	sgPlot.header.footer.color="#6EC4E8") #,
-	# sgPlot.districts = c("0130", "0180"),
-	# parallel.config=list(
-	# 	BACKEND="PARALLEL",
-	# 	WORKERS=list(SG_PLOTS = 30)))
+visualizeSGP(Colorado_SGP,
+		plot.types = c("bubblePlot", "growthAchievementPlot"),
+		bPlot.years= "2018",
+		bPlot.content_areas=c("ELA", "MATHEMATICS"),
+		bPlot.anonymize=TRUE,
+		gaPlot.years = "2018",
+		gaPlot.max.order.for.progression=2,
+		parallel.config=list(
+			BACKEND='FOREACH', TYPE="doParallel",
+			WORKERS=list(GA_PLOTS=5))
+)
