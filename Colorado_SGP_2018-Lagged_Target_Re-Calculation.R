@@ -9,7 +9,7 @@ require(SGP)
 require(data.table)
 
 ###   Load data
-load("Data/Colorado_Data_LONG.Rdata")
+load("Data/Colorado_SGP.Rdata")
 
 ###   Read in 2018 SGP Configuration Scripts and Combine
 source("SGP_CONFIG/2018/ELA.R")
