@@ -1,3 +1,9 @@
+source('/media/Data/Dropbox/Github_Repos/Projects/Colorado/SGP_CONFIG/2018/ELA.R')
+source('/media/Data/Dropbox/Github_Repos/Projects/Colorado/SGP_CONFIG/2018/MATHEMATICS.R')
+load("/media/Data/Dropbox (SGP)/SGP/Colorado/Data/Colorado_SGP.Rdata")
+
+setwd("/media/Data/CMAS/2018")
+
 ################################################################################
 ###                                                                          ###
 ###   Re-Calculate Lagged Projections for Colorado (CMAS/PSAT/SAT) -  2018   ###

@@ -21,7 +21,7 @@ ids <- unique(Colorado_SGP@Data[YEAR=='2018' & GRADE %in% c(3:8) & CONTENT_AREA 
 Colorado_SGP@Data <- Colorado_SGP@Data[ID %in% ids,]
 Colorado_SGP@Data <- Colorado_SGP@Data[-which(YEAR=='2018' & GRADE %in% c(9,10,11, "EOCT")),]
 Colorado_SGP@Data <- Colorado_SGP@Data[-which(CONTENT_AREA %in% c("ALGEBRA_I", "GEOMETRY", "INTEGRATED_MATH_1", "MATHEMATICS_SAT", "ELA_SAT", "SLA")),]
-table(Colorado_SGP@Data[, YEAR, CONTENT_AREA])
+table(Colorado_SGP@Data[, YEAR, CONTENT_AREA]) # only ELA/MATHEMATICS for 2015-2018
 
 ###   Re-configure course sequences for CMAS ISRs (CMAS ONLY! - no PSAT/SAT or PARCC EOCT)
 
@@ -55,7 +55,7 @@ visualizeSGP(
 	Colorado_SGP,
 	plot.types=c("studentGrowthPlot"),
 	sgPlot.content_areas = c("ELA", "MATHEMATICS"),
-	# sgPlot.demo.report = TRUE,
+	sgPlot.demo.report = TRUE,
 	# sgPlot.districts = "0880", # "0100", #
 	# sgPlot.schools = missing.schools, # "9389", # "2223"
 	sgPlot.front.page = "2018_CMAS_ISR_Cover_Page.pdf", # Visualizations/Misc/  # /home/ec2-user/SGP/Colorado
