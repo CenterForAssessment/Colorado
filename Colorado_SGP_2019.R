@@ -5,7 +5,6 @@
 ################################################################################
 
 ###   Load required packages
-
 require(SGP)
 require(data.table)
 
@@ -42,6 +41,7 @@ Colorado_SGP <- updateSGP(
 		# goodness.of.fit.print = FALSE,
 	  # sgp.test.cohort.size = 2500,
 	  # return.sgp.test.results = TRUE,
+		outputSGP.output.type=c("LONG_FINAL_YEAR_Data"),
 	  outputSGP.directory="Data/Archive/2019_CMAS",
 		save.intermediate.results=FALSE,
 		parallel.config = list(

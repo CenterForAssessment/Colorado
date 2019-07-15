@@ -7,7 +7,7 @@
 ### Load Packages
 require(data.table)
 
-#   Load Base PARCC Data
+#   Load Base Data
 read.zip <- function(file, fread.args=NULL) {
   if(!file.exists(file)) stop("File requested does not exist in path provided.")
 	my.file <- gsub(".zip",  "", file)
