@@ -23,7 +23,7 @@ read.zip <- function(file, fread.args=NULL) {
 }
 
 Colorado_Data_LONG_CMAS_2019 <- read.zip(file="Data/Base_Files/CMAS 2019_Growth_ReadIn_07.03.19.csv.zip", fread.args="colClasses=rep('character', 24)")
-Colorado_Data_LONG_PSAT_SAT_2019 <- fread("Data/Base_Files/PSAT_SAT_2019_GrowthReadin_Final_07.23.19.csv", colClasses=rep('character', 25))
+Colorado_Data_LONG_PSAT_SAT_2019 <- read.zip("Data/Base_Files/PSAT_SAT_2019_GrowthReadin_Updated_08.03.19.csv.zip", fread.args="colClasses=rep('character', 25)")
 
 ###   Tidy up CMAS Data
 
@@ -48,9 +48,45 @@ Colorado_Data_LONG_CMAS_2019[, LAST_NAME:=factor(LAST_NAME)]
 setattr(Colorado_Data_LONG_CMAS_2019$LAST_NAME, "levels", sapply(levels(Colorado_Data_LONG_CMAS_2019$LAST_NAME), SGP::capwords))
 setattr(Colorado_Data_LONG_CMAS_2019$FIRST_NAME, "levels", sapply(levels(Colorado_Data_LONG_CMAS_2019$FIRST_NAME), SGP::capwords))
 
+####
 #   Clean up SCHOOL_NAME and DISTRICT_NAME
-setattr(Colorado_Data_LONG_CMAS_2019$SCHOOL_NAME, "levels", sapply(levels(Colorado_Data_LONG_CMAS_2019$SCHOOL_NAME), SGP::capwords))
-setattr(Colorado_Data_LONG_CMAS_2019$DISTRICT_NAME, "levels", sapply(levels(Colorado_Data_LONG_CMAS_2019$DISTRICT_NAME), SGP::capwords))
+#   Check levels first to confirm special.words - Clean Well for ISRs
+####
+
+###  Schools
+grep("  ", levels(Colorado_Data_LONG_CMAS_2019$SCHOOL_NAME), value=T)
+
+new.sch.levs <- levels(Colorado_Data_LONG_CMAS_2019$SCHOOL_NAME)
+new.sch.levs <- gsub("/", " / ", new.sch.levs)
+
+new.sch.levs <- sapply(new.sch.levs, SGP::capwords, special.words = c('AIM', 'AXL', 'CCH', 'CMS', 'DC', 'DCIS', 'DSST', 'DSST:', 'ECE-8', 'GVR', 'IB', 'KIPP', 'PK', 'PK-8', 'PK-12', 'PSD', 'LEAP', 'MHCD', 'STEM', 'TCA', 'VSSA'), USE.NAMES=FALSE)
+new.sch.levs <- gsub(" / ", "/", new.sch.levs)
+new.sch.levs <- gsub("Prek", "PreK", new.sch.levs)
+new.sch.levs <- gsub("Mcauliffe", "McAuliffe", new.sch.levs)
+new.sch.levs <- gsub("Mcglone", "McGlone", new.sch.levs)
+new.sch.levs <- gsub("Mcgraw", "McGraw", new.sch.levs)
+new.sch.levs <- gsub("Mckinley", "McKinley", new.sch.levs)
+new.sch.levs <- gsub("Mcmeen", "McMeen", new.sch.levs)
+new.sch.levs <- gsub("Mc Clave", "McClave", new.sch.levs)
+new.sch.levs <- gsub("Mc Elwain", "McElwain", new.sch.levs)
+new.sch.levs <- gsub("Mc Ginnis", "McGinnis", new.sch.levs)
+new.sch.levs <- gsub("Achieve Online", "ACHIEVE Online", new.sch.levs)
+setattr(Colorado_Data_LONG_CMAS_2019$SCHOOL_NAME, "levels", new.sch.levs)
+
+###  Districts
+grep("J", levels(Colorado_Data_LONG_CMAS_2019$DISTRICT_NAME), value=T)
+new.dst.levs <- levels(Colorado_Data_LONG_CMAS_2019$DISTRICT_NAME)
+new.dst.levs <- gsub("/", " / ", new.dst.levs)
+new.dst.levs <- gsub("[-]", " - ", new.dst.levs)
+
+new.dst.levs <- sapply(new.dst.levs, SGP::capwords, special.words = c('1J', '2J', '3J', '4J', '5J', '6J', '11J', '22J', '27J', '28J', '29J', '31J', '33J', '100J', 'JT', '32J', 'RJ', '26J', '49JT', '4A', 'RD', 'RE', 'RE1J'), USE.NAMES=FALSE)
+new.dst.levs <- gsub(" / ", "/", new.dst.levs)
+new.dst.levs <- gsub(" - ", "-", new.dst.levs)
+new.dst.levs <- gsub("Mc Clave", "McClave", new.dst.levs)
+grep("j", new.dst.levs, value=T) # Should only leave * Conejos
+
+setattr(Colorado_Data_LONG_CMAS_2019$DISTRICT_NAME, "levels", new.dst.levs)
+
 
 #   Resolve duplicates
 setkey(Colorado_Data_LONG_CMAS_2019, VALID_CASE, CONTENT_AREA, YEAR, ID, GRADE, SCALE_SCORE)
@@ -89,8 +125,35 @@ setattr(Colorado_Data_LONG_PSAT_SAT_2019$LAST_NAME, "levels", sapply(levels(Colo
 setattr(Colorado_Data_LONG_PSAT_SAT_2019$FIRST_NAME, "levels", sapply(levels(Colorado_Data_LONG_PSAT_SAT_2019$FIRST_NAME), SGP::capwords))
 
 #   Clean up SCHOOL_NAME and DISTRICT_NAME
-setattr(Colorado_Data_LONG_PSAT_SAT_2019$SCHOOL_NAME, "levels", sapply(levels(Colorado_Data_LONG_PSAT_SAT_2019$SCHOOL_NAME), SGP::capwords))
-setattr(Colorado_Data_LONG_PSAT_SAT_2019$DISTRICT_NAME, "levels", sapply(levels(Colorado_Data_LONG_PSAT_SAT_2019$DISTRICT_NAME), SGP::capwords))
+new.sch.levs <- toupper(levels(Colorado_Data_LONG_PSAT_SAT_2019$SCHOOL_NAME))
+new.sch.levs <- gsub("/", " / ", new.sch.levs)
+
+new.sch.levs <- sapply(new.sch.levs, SGP::capwords, special.words = c('AIM', 'AXL', 'CCH', 'CMS', 'DC', 'DCIS', 'DSST', 'DSST:', 'ECE-8', 'GVR', 'IB', 'KIPP', 'PK', 'PK-8', 'PK-12', 'PSD', 'LEAP', 'MHCD', 'STEM', 'TCA', 'VSSA', 'PSD', 'GOAL', 'EDCSD', 'COVA', 'GES'), USE.NAMES=FALSE)
+new.sch.levs <- gsub(" / ", "/", new.sch.levs)
+new.sch.levs <- gsub("Prek", "PreK", new.sch.levs)
+new.sch.levs <- gsub("Jeffco", ", 'JeffCo'", new.sch.levs)
+new.sch.levs <- gsub("Mcauliffe", "McAuliffe", new.sch.levs)
+new.sch.levs <- gsub("Mcglone", "McGlone", new.sch.levs)
+new.sch.levs <- gsub("Mcgraw", "McGraw", new.sch.levs)
+new.sch.levs <- gsub("Mckinley", "McKinley", new.sch.levs)
+new.sch.levs <- gsub("Mcmeen", "McMeen", new.sch.levs)
+new.sch.levs <- gsub("Mc Clave", "McClave", new.sch.levs)
+new.sch.levs <- gsub("Mc Elwain", "McElwain", new.sch.levs)
+new.sch.levs <- gsub("Mc Ginnis", "McGinnis", new.sch.levs)
+new.sch.levs <- gsub("Achieve Online", "ACHIEVE Online", new.sch.levs)
+setattr(Colorado_Data_LONG_PSAT_SAT_2019$SCHOOL_NAME, "levels", new.sch.levs)
+
+grep("J", levels(Colorado_Data_LONG_PSAT_SAT_2019$DISTRICT_NAME), value=T)
+new.dst.levs <- toupper(levels(Colorado_Data_LONG_PSAT_SAT_2019$DISTRICT_NAME))
+new.dst.levs <- gsub("/", " / ", new.dst.levs)
+new.dst.levs <- gsub("[-]", " - ", new.dst.levs)
+
+new.dst.levs <- sapply(new.dst.levs, SGP::capwords, special.words = c('1J', '2J', '3J', '4J', '5J', '6J', '11J', '22J', '27J', '28J', '29J', '31J', '33J', '100J', 'JT', '32J', 'RJ', '26J', '49JT', '4A', 'RD', 'RE', 'RE1J'), USE.NAMES=FALSE)
+new.dst.levs <- gsub(" / ", "/", new.dst.levs)
+new.dst.levs <- gsub(" - ", "-", new.dst.levs)
+new.dst.levs <- gsub("Mc Clave", "McClave", new.dst.levs)
+grep("j", new.dst.levs, value=T) # Should only leave * Conejos
+setattr(Colorado_Data_LONG_PSAT_SAT_2019$DISTRICT_NAME, "levels", new.dst.levs)
 
 #  Establish ACHIEVEMENT_LEVEL for PSAT/SAT
 Colorado_Data_LONG_PSAT_SAT_2019 <- SGP:::getAchievementLevel(Colorado_Data_LONG_PSAT_SAT_2019, state="CO")
@@ -98,9 +161,9 @@ Colorado_Data_LONG_PSAT_SAT_2019[ACHIEVEMENT_LEVEL=='NA', ACHIEVEMENT_LEVEL := "
 table(Colorado_Data_LONG_PSAT_SAT_2019[, ACHIEVEMENT_LEVEL, VALID_CASE])
 
 #   Resolve duplicates
-#setkey(Colorado_Data_LONG_PSAT_SAT_2019, VALID_CASE, CONTENT_AREA, YEAR, ID, GRADE, SCALE_SCORE)
-#setkey(Colorado_Data_LONG_PSAT_SAT_2019, VALID_CASE, CONTENT_AREA, YEAR, ID, GRADE)
-#dups <- data.table(Colorado_Data_LONG_PSAT_SAT_2019[unique(c(which(duplicated(Colorado_Data_LONG_PSAT_SAT_2019, by=key(Colorado_Data_LONG_PSAT_SAT_2019)))-1, which(duplicated(Colorado_Data_LONG_PSAT_SAT_2019, by=key(Colorado_Data_LONG_PSAT_SAT_2019))))), ], key=key(Colorado_Data_LONG_PSAT_SAT_2019))
+# setkey(Colorado_Data_LONG_PSAT_SAT_2019, VALID_CASE, CONTENT_AREA, YEAR, ID, GRADE, SCALE_SCORE)
+# setkey(Colorado_Data_LONG_PSAT_SAT_2019, VALID_CASE, CONTENT_AREA, YEAR, ID, GRADE)
+# dups <- data.table(Colorado_Data_LONG_PSAT_SAT_2019[unique(c(which(duplicated(Colorado_Data_LONG_PSAT_SAT_2019, by=key(Colorado_Data_LONG_PSAT_SAT_2019)))-1, which(duplicated(Colorado_Data_LONG_PSAT_SAT_2019, by=key(Colorado_Data_LONG_PSAT_SAT_2019))))), ], key=key(Colorado_Data_LONG_PSAT_SAT_2019))
 # table(dups$VALID_CASE) # All 2019 duplicates within GRADE are already INVALID_CASEs
 # Colorado_Data_LONG_PSAT_SAT_2019[which(duplicated(Colorado_Data_LONG_PSAT_SAT_2019, by=key(Colorado_Data_LONG_PSAT_SAT_2019))), VALID_CASE:="INVALID_CASE"]
 
@@ -108,13 +171,15 @@ table(Colorado_Data_LONG_PSAT_SAT_2019[, ACHIEVEMENT_LEVEL, VALID_CASE])
 save(Colorado_Data_LONG_PSAT_SAT_2019, file="Data/Colorado_Data_LONG_PSAT_SAT_2019.Rdata")
 
 
+###   Run CMAS and P/SAT seperately -- Not needed:
+
 ## rbind CMAS and PSAT_SAT data and save
-Colorado_Data_LONG_2019 <- rbindlist(list(Colorado_Data_LONG_CMAS_2019, Colorado_Data_LONG_PSAT_SAT_2019), fill=TRUE)
-
+# Colorado_Data_LONG_2019 <- rbindlist(list(Colorado_Data_LONG_CMAS_2019, Colorado_Data_LONG_PSAT_SAT_2019), fill=TRUE)
+#
 ## Final tidying up
-
-Colorado_Data_LONG_2019[,SCALE_SCORE:=as.numeric(SCALE_SCORE)]
-
-
-setkey(Colorado_Data_LONG_2019, VALID_CASE, CONTENT_AREA, YEAR, GRADE, ID)
-save(Colorado_Data_LONG_2019, file="Data/Colorado_Data_LONG_2019.Rdata")
+#
+# Colorado_Data_LONG_2019[,SCALE_SCORE:=as.numeric(SCALE_SCORE)]
+#
+#
+# setkey(Colorado_Data_LONG_2019, VALID_CASE, CONTENT_AREA, YEAR, GRADE, ID)
+# save(Colorado_Data_LONG_2019, file="Data/Colorado_Data_LONG_2019.Rdata")
