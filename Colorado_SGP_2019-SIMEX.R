@@ -67,92 +67,25 @@ grep("SGP", names(Colorado_Data_LONG), value=TRUE)
 setnames(Colorado_Data_LONG, gsub("SGP", "ORIG", names(Colorado_Data_LONG)))
 setnames(Colorado_Data_LONG, gsub("STATUS_3_YEAR", "STATUS_3_YEAR_ORIG", names(Colorado_Data_LONG)))
 
+Colorado_Data_LONG[, VC_ORIG := VALID_CASE]
+
 save(Colorado_Data_LONG, file="Data/Colorado_Data_LONG.rda")
 
 
+
 ##########
-#####        BASELINE & SIMEX SGPs
+#####        SIMEX SGPs Only, 2017 & 2018
 ##########
+
 
 require(SGP)
 require(data.table)
 
-setwd("/Users/avi/Data/CO/SIMEX")
-
-load("Data/Colorado_Data_LONG.rda")
-
-###  Invalidate first cases of repeater students
-Colorado_Data_LONG[, VC_ORIG := VALID_CASE]
-
-setkey(Colorado_Data_LONG, VALID_CASE, CONTENT_AREA, ID, GRADE, YEAR)
-setkey(Colorado_Data_LONG, VALID_CASE, CONTENT_AREA, ID, GRADE)
-dups <- data.table(Colorado_Data_LONG[unique(c(which(duplicated(Colorado_Data_LONG, by=key(Colorado_Data_LONG)))-1, which(duplicated(Colorado_Data_LONG, by=key(Colorado_Data_LONG))))), ], key=key(Colorado_Data_LONG))
-table(dups$VALID_CASE) # 1495 duplicates within GRADE are already INVALID_CASEs - 11354 still VALID_CASEs
-Colorado_Data_LONG[which(duplicated(Colorado_Data_LONG, by=key(Colorado_Data_LONG)))-1, VALID_CASE := "INVALID_CASE"]
-
-table(Colorado_Data_LONG[, VALID_CASE, VC_ORIG])
+setwd("/Users/avi/Data/CO/Colorado")
+load("./Data/Colorado_Data_LONG.rda")
 
 ###   Make changes to SGPstateData
 SGPstateData[["CO"]][["SGP_Configuration"]][["max.order.for.percentile"]] <- 2
-SGPstateData[["CO"]][["SGP_Configuration"]][["print.other.gp"]] <- TRUE
-SGPstateData[["CO"]][["Growth"]][["System_Type"]] <- "Cohort and Baseline Referenced"
-
-###   prepareSGP step to create SGP object for baseline coef matrix construction
-Colorado_SGP <- prepareSGP(Colorado_Data_LONG, create.additional.variables=FALSE)
-
-###		Calculate SIMEX/Baseline SGPs for CMAS Content Areas
-	Colorado_SGP <- analyzeSGP(
-		Colorado_SGP,
-		years="2019",
-		content_areas=c("ELA"), #, "MATHEMATICS"),
-		sgp.percentiles=TRUE,
-		sgp.projections=TRUE,
-		sgp.projections.lagged=TRUE,
-		sgp.percentiles.baseline=TRUE,
-		sgp.projections.baseline=TRUE,
-		sgp.projections.lagged.baseline=TRUE,
-		sgp.baseline.panel.years=c("2015", "2016", "2017", "2018"),
-		simulate.sgps = FALSE,
-    calculate.simex=list(csem.data.vnames="SCALE_SCORE_CSEM", lambda=seq(0,2,0.5), simulation.iterations=75,
-                                  simex.sample.size=5000, extrapolation="linear", save.matrices=TRUE),
-		calculate.simex.baseline=list(csem.data.vnames="SCALE_SCORE_CSEM", lambda=seq(0,2,0.5), simulation.iterations=75,
-                                  simex.sample.size=10000, extrapolation="linear", save.matrices=TRUE, use.cohort.for.ranking=TRUE),
-    parallel.config = list(
-        BACKEND="FOREACH",
-        TYPE="doParallel",
-        WORKERS=list(TAUS=8, SIMEX=8))
-  )
-
-names(Colorado_SGP@SGP[[1]][["ELA.BASELINE.SIMEX"]][[2]])
-
-Colorado_SGP <- combineSGP(Colorado_SGP,
-                    years = "2019",
-                    sgp.target.scale.scores = TRUE,
-                    parallel.config = list(
-                      BACKEND="PARALLEL",
-                      WORKERS=list(SGP_SCALE_SCORE_TARGETS=6)))
-
-outputSGP(Colorado_SGP, output.type=c("LONG_Data", "LONG_FINAL_YEAR_Data"))
-
-
-save(Colorado_SGP, file="Data/Colorado_SGP.Rdata")
-
-
-
-##########
-#####        SIMEX SGPs Only, 2017-2019 --  NOT RUN (yet)
-##########
-
-
-require(SGP)
-require(data.table)
-
-setwd("/Users/avi/Data/CO/SIMEX/SIMEX_Only")
-
-load("../Data/Colorado_Data_LONG.rda")
-
-###   Make changes to SGPstateData
-SGPstateData[["CO"]][["SGP_Configuration"]][["max.order.for.percentile"]] <- 3
 SGPstateData[["CO"]][["SGP_Configuration"]][["print.other.gp"]] <- TRUE
 
 ###   Read in 2019 SGP Configuration Scripts and Combine
@@ -169,11 +102,11 @@ SGPstateData[["CO"]][["SGP_Configuration"]][["print.other.gp"]] <- TRUE
 ###
 
 Colorado_SGP <- abcSGP(
-		sgp_object=Colorado_Data_LONG,
+		sgp_object=Colorado_Data_LONG[YEAR %in% 2015:2018],
 		# sgp.config = COLO_2019.config,
-    years=c("2017", "2018", "2019"),
+    years=c("2017", "2018"), # , "2019"
 		content_areas=c("ELA", "MATHEMATICS"),
-		steps=c("prepareSGP", "analyzeSGP", "combineSGP", "outputSGP"),
+		steps=c("prepareSGP", "analyzeSGP"), # , "combineSGP", "outputSGP"
 		sgp.percentiles = TRUE,
 		sgp.projections = TRUE,
 		sgp.projections.lagged = TRUE,
@@ -181,15 +114,78 @@ Colorado_SGP <- abcSGP(
 		sgp.projections.baseline = FALSE,
 		sgp.projections.lagged.baseline = FALSE,
     calculate.simex = TRUE,
-		simulate.sgps = FALSE,
-		sgp.target.scale.scores = TRUE,
-		outputSGP.output.type= "LONG_Data", # c("LONG_FINAL_YEAR_Data"),
+		simulate.sgps = TRUE,
+		# sgp.target.scale.scores = TRUE,
+		# outputSGP.output.type= "LONG_Data", # c("LONG_FINAL_YEAR_Data"),
 		save.intermediate.results=FALSE,
     parallel.config = list(
       BACKEND="FOREACH",
       TYPE="doParallel",
       WORKERS=list(TAUS=8, SIMEX=8)))
 
-
 ###  Save 2019 Colorado SGP object
 save(Colorado_SGP, file="Data/Colorado_SGP.Rdata")
+
+
+##########
+#####        BASELINE & SIMEX SGPs
+##########
+
+###  Invalidate first cases of repeater students
+
+setkey(Colorado_SGP@Data, VALID_CASE, CONTENT_AREA, ID, GRADE, YEAR)
+setkey(Colorado_SGP@Data, VALID_CASE, CONTENT_AREA, ID, GRADE)
+dups <- data.table(Colorado_SGP@Data[unique(c(which(duplicated(Colorado_SGP@Data, by=key(Colorado_SGP@Data)))-1, which(duplicated(Colorado_SGP@Data, by=key(Colorado_SGP@Data))))), ], key=key(Colorado_SGP@Data))
+table(dups$VALID_CASE) # 1495 duplicates within GRADE are already INVALID_CASEs - 11354 still VALID_CASEs
+Colorado_SGP@Data[which(duplicated(Colorado_SGP@Data, by=key(Colorado_SGP@Data)))-1, VALID_CASE := "INVALID_CASE"]
+
+table(Colorado_SGP@Data[, VALID_CASE, VC_ORIG])
+
+Colorado_SGP@Data <- rbindlist(list(Colorado_SGP@Data, Colorado_Data_LONG[YEAR == 2019]), fill = TRUE)
+Colorado_SGP <- prepareSGP(Colorado_SGP, create.additional.variables=FALSE)
+
+###   Make changes to SGPstateData
+SGPstateData[["CO"]][["SGP_Configuration"]][["max.order.for.percentile"]] <- 2
+SGPstateData[["CO"]][["SGP_Configuration"]][["max.order.for.projection"]] <- 3 # Force uncorrected to match SIMEX
+SGPstateData[["CO"]][["SGP_Configuration"]][["print.other.gp"]] <- TRUE
+SGPstateData[["CO"]][["Growth"]][["System_Type"]] <- "Cohort and Baseline Referenced"
+
+
+###		Calculate SIMEX/Baseline SGPs for CMAS Content Areas
+	Colorado_SGP <- analyzeSGP(
+		Colorado_SGP,
+		years="2019",
+		content_areas=c("ELA", "MATHEMATICS"),
+		sgp.percentiles=TRUE,
+		sgp.projections=TRUE,
+		sgp.projections.lagged=TRUE,
+		sgp.percentiles.baseline=TRUE,
+		sgp.projections.baseline=TRUE,
+		sgp.projections.lagged.baseline=TRUE,
+		sgp.baseline.panel.years=c("2015", "2016", "2017", "2018"),
+		simulate.sgps = TRUE,
+    calculate.simex=list(csem.data.vnames="SCALE_SCORE_CSEM", lambda=seq(0,2,0.5), simulation.iterations=75,
+                                  simex.sample.size=5000, extrapolation="linear", save.matrices=TRUE),
+		calculate.simex.baseline=list(csem.data.vnames="SCALE_SCORE_CSEM", lambda=seq(0,2,0.5), simulation.iterations=75,
+                                  simex.sample.size=10000, extrapolation="linear", save.matrices=TRUE, use.cohort.for.ranking=TRUE),
+    parallel.config = list(
+        BACKEND="FOREACH",
+        TYPE="doParallel",
+        WORKERS=list(TAUS=8, SIMEX=8))
+  )
+
+names(Colorado_SGP@SGP[[1]][["ELA.BASELINE.SIMEX"]][[2]])
+
+Colorado_SGP <- combineSGP(Colorado_SGP,
+                    # years = "2019",
+                    sgp.target.scale.scores = TRUE,
+                    parallel.config = list(
+                      BACKEND="PARALLEL",
+                      WORKERS=list(SGP_SCALE_SCORE_TARGETS=2)))
+
+###  Save 2019 Colorado SGP object
+save(Colorado_SGP, file="./Data/Colorado_SGP.Rdata")
+
+Colorado_SGP@Data[, grep("ORIG", names(Colorado_SGP@Data), value=TRUE) := NULL]
+
+outputSGP(Colorado_SGP, output.type=c("LONG_Data", "LONG_FINAL_YEAR_Data"))
