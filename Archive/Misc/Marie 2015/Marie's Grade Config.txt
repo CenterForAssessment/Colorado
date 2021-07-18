@@ -1,0 +1,50 @@
+READING.ELA.2015 = list(
+	sgp.content.areas=list("READING","READING","READING","ELA"),
+	sgp.panel.years=as.character(2012:2015),
+	sgp.grade.sequences=list(as.character(3:4), as.character(3:5), as.character(3:6), as.character(4:7), as.character(5:8), as.character(6:9), as.character(7:10))))
+
+WRITING.ELA.2015 = list(
+	sgp.content.areas=list("WRITING","WRITING","WRITING","ELA"),
+	sgp.panel.years=as.character(2012:2015),
+	sgp.grade.sequences=list(as.character(3:4), as.character(3:5), as.character(3:6), as.character(4:7), as.character(5:8), as.character(6:9), as.character(7:10))))
+
+READWRITE.ELA.2015 = list(
+	sgp.content.areas=list("READWRITE","READWRITE","READWRITE","ELA"),
+	sgp.panel.years=as.character(2012:2015),
+	sgp.grade.sequences=list(as.character(3:4), as.character(3:5), as.character(3:6), as.character(4:7), as.character(5:8), as.character(6:9), as.character(7:10))))
+
+
+MATHEMATICS.MAT.2015 = list(
+	sgp.content.areas=list("MATHEMATICS","MATHEMATICS","MATHEMATICS","MAT"),
+	sgp.panel.years=as.character(2012:2015),
+	sgp.grade.sequences=list(as.character(3:4), as.character(3:5), as.character(3:6), as.character(4:7), as.character(5:8))))
+
+MATHEMATICS.ALG01.2015 = list(
+	sgp.content.areas=list("MATHEMATICS","MATHEMATICS","MATHEMATICS","ALG01"),
+	sgp.panel.years=as.character(2012:2015),
+	sgp.grade.sequences=list(as.character(4:7), as.character(5:8), as.character(6:9), as.character(7:10))))
+
+MATHEMATICS.GEO01.2015 = list(
+	sgp.content.areas=list("MATHEMATICS","MATHEMATICS","MATHEMATICS","GEO01"),
+	sgp.panel.years=as.character(2012:2015),
+	sgp.grade.sequences=list(as.character(5:8), as.character(6:9), as.character(7:10), as.character(8:11))))	
+	
+MATHEMATICS.ALG02.2015 = list(
+	sgp.content.areas=list("MATHEMATICS","MATHEMATICS","MATHEMATICS","ALG02"),
+	sgp.panel.years=as.character(2012:2015),
+	sgp.grade.sequences=list(as.character(6:9), as.character(7:10), as.character(8:11))))
+
+MATHEMATICS.MAT1I.2015 = list(
+	sgp.content.areas=list("MATHEMATICS","MATHEMATICS","MATHEMATICS","MAT1I"),
+	sgp.panel.years=as.character(2012:2015),
+	sgp.grade.sequences=list(as.character(4:7), as.character(5:8), as.character(6:9), as.character(7:10))))
+
+MATHEMATICS.MAT2I.2015 = list(
+	sgp.content.areas=list("MATHEMATICS","MATHEMATICS","MATHEMATICS","MAT2I"),
+	sgp.panel.years=as.character(2012:2015),
+	sgp.grade.sequences=list(as.character(5:8), as.character(6:9), as.character(7:10), as.character(8:11))))	
+	
+MATHEMATICS.MAT3I.2015 = list(
+	sgp.content.areas=list("MATHEMATICS","MATHEMATICS","MATHEMATICS","MAT3I"),
+	sgp.panel.years=as.character(2012:2015),
+	sgp.grade.sequences=list(as.character(6:9), as.character(7:10), as.character(8:11))))
