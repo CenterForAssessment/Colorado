@@ -7,23 +7,7 @@
 ### Load Packages
 require(data.table)
 
-#   Load Base Data
-read.zip <- function(file, fread.args=NULL) {
-  if(!file.exists(file)) stop("File requested does not exist in path provided.")
-	my.file <- gsub(".zip",  "", file)
-	tmp.dir <- getwd()
-	setwd(tempdir())
-	system(paste0("unzip '", file.path(tmp.dir, paste0(my.file, ".zip")), "'"))
-
-  if (!is.null(fread.args)) if (substring(fread.args, 1, 1) != ",") fread.args <- paste(",", fread.args)
-	TMP <-  eval(parse(text=paste0("data.table::fread('", grep(basename(my.file), list.files(), value=TRUE), "'", fread.args, ")")))
-	unlink(grep(basename(my.file), list.files(), value=TRUE))
-	setwd(tmp.dir)
-	return(TMP)
-}
-
-Colorado_Data_LONG_CMAS_2021 <- read.zip(file="Data/Base_Files/CMAS 2021_Growth_ReadIn_07.03.19.csv.zip", fread.args="colClasses=rep('character', 24)")
-Colorado_Data_LONG_PSAT_SAT_2021 <- read.zip("Data/Base_Files/PSAT_SAT_2021_GrowthReadin_Updated_08.03.19.csv.zip", fread.args="colClasses=rep('character', 25)")
+Colorado_Data_LONG_CMAS_2021 <- fread(file="Data/Base_Files/CMAS_readin_2021.txt", colClasses=rep('character', 26), quote="'")
 
 ###   Tidy up CMAS Data
 
@@ -32,7 +16,7 @@ setnames(Colorado_Data_LONG_CMAS_2021, "YR", "YEAR")
 
 #   Re-lable CONTENT_AREA values
 Colorado_Data_LONG_CMAS_2021[, CONTENT_AREA := factor(CONTENT_AREA)]
-levels(Colorado_Data_LONG_CMAS_2021$CONTENT_AREA) <- c("ELA", "MATHEMATICS")
+setattr(Colorado_Data_LONG_CMAS_2021$CONTENT_AREA, "levels", c("ELA", "MATHEMATICS", "SLA"))
 Colorado_Data_LONG_CMAS_2021[, CONTENT_AREA := as.character(CONTENT_AREA)]
 
 #   Convert SCALE_SCORE variable to numeric
@@ -54,14 +38,14 @@ setattr(Colorado_Data_LONG_CMAS_2021$FIRST_NAME, "levels", sapply(levels(Colorad
 ####
 
 ###  Schools
-grep("  ", levels(Colorado_Data_LONG_CMAS_2021$SCHOOL_NAME), value=T)
-
 new.sch.levs <- levels(Colorado_Data_LONG_CMAS_2021$SCHOOL_NAME)
 new.sch.levs <- gsub("/", " / ", new.sch.levs)
 
 new.sch.levs <- sapply(new.sch.levs, SGP::capwords, special.words = c('AIM', 'AXL', 'CCH', 'CMS', 'DC', 'DCIS', 'DSST', 'DSST:', 'ECE-8', 'GVR', 'IB', 'KIPP', 'PK', 'PK-8', 'PK-12', 'PSD', 'LEAP', 'MHCD', 'STEM', 'TCA', 'VSSA'), USE.NAMES=FALSE)
 new.sch.levs <- gsub(" / ", "/", new.sch.levs)
+new.sch.levs <- gsub("''", "'", new.sch.levs)
 new.sch.levs <- gsub("Prek", "PreK", new.sch.levs)
+new.sch.levs <- gsub("Pk-8", "PK-8", new.sch.levs)
 new.sch.levs <- gsub("Mcauliffe", "McAuliffe", new.sch.levs)
 new.sch.levs <- gsub("Mcglone", "McGlone", new.sch.levs)
 new.sch.levs <- gsub("Mcgraw", "McGraw", new.sch.levs)
@@ -94,6 +78,9 @@ setkey(Colorado_Data_LONG_CMAS_2021, VALID_CASE, CONTENT_AREA, YEAR, ID, GRADE)
 # dups <- data.table(Colorado_Data_LONG_CMAS_2021[unique(c(which(duplicated(Colorado_Data_LONG_CMAS_2021, by=key(Colorado_Data_LONG_CMAS_2021)))-1, which(duplicated(Colorado_Data_LONG_CMAS_2021, by=key(Colorado_Data_LONG_CMAS_2021))))), ], key=key(Colorado_Data_LONG_CMAS_2021))
 # table(dups$VALID_CASE) # All 2021 duplicates within GRADE are already INVALID_CASEs
 # Colorado_Data_LONG_CMAS_2021[which(duplicated(Colorado_Data_LONG_CMAS_2021, by=key(Colorado_Data_LONG_CMAS_2021))), VALID_CASE:="INVALID_CASE"]
+
+##  Missing cases in 2021
+round(prop.table(table(Colorado_Data_LONG_CMAS_2021[CONTENT_AREA != "SLA", is.na(SCALE_SCORE), GRADE]),1)*100, 1)
 
 ##  Save 2021 Data
 save(Colorado_Data_LONG_CMAS_2021, file="Data/Colorado_Data_LONG_CMAS_2021.Rdata")
