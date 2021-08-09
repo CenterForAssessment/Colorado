@@ -82,30 +82,39 @@ setkey(Colorado_Data_LONG_CMAS_2021, VALID_CASE, CONTENT_AREA, YEAR, ID, GRADE)
 ##  Missing cases in 2021
 round(prop.table(table(Colorado_Data_LONG_CMAS_2021[CONTENT_AREA != "SLA", is.na(SCALE_SCORE), GRADE]),1)*100, 1)
 
-##  Save 2021 Data
-save(Colorado_Data_LONG_CMAS_2021, file="Data/Colorado_Data_LONG_CMAS_2021.Rdata")
+Colorado_Data_LONG_CMAS_2021 <- Colorado_Data_LONG_CMAS_2021[CONTENT_AREA != "SLA"]
+
+##  Save 2021 Data - combine with P/SAT data and save as one file below
+# save(Colorado_Data_LONG_CMAS_2021, file="Data/Colorado_Data_LONG_CMAS_2021.Rdata")
+
 
 #############################################
 ###   PSAT/SAT
 #############################################
 
-Colorado_Data_LONG_PSAT_SAT_2021[,EDW_DATA_SOURCE:=NULL]
+Colorado_Data_LONG_PSAT_SAT_2021 <- fread(file="Data/Base_Files/SAT_Growth_Readin_2021.txt", colClasses=rep('character', 25), quote="'")
+
+Colorado_Data_LONG_PSAT_SAT_2021[, EDW_DATA_SOURCE:=NULL]
 
 #   Rename YR
 setnames(Colorado_Data_LONG_PSAT_SAT_2021, "YR", "YEAR")
 
-Colorado_Data_LONG_PSAT_SAT_2021[CONTENT_AREA=="ELA" & GRADE==9, CONTENT_AREA := "ELA_PSAT_9"]
-Colorado_Data_LONG_PSAT_SAT_2021[CONTENT_AREA=="ELA" & GRADE==10, CONTENT_AREA:= "ELA_PSAT_10"]
-Colorado_Data_LONG_PSAT_SAT_2021[CONTENT_AREA=="ELA" & GRADE==11, CONTENT_AREA:= "ELA_SAT"]
-Colorado_Data_LONG_PSAT_SAT_2021[CONTENT_AREA=="MAT" & GRADE==9, CONTENT_AREA := "MATHEMATICS_PSAT_9"]
-Colorado_Data_LONG_PSAT_SAT_2021[CONTENT_AREA=="MAT" & GRADE==10, CONTENT_AREA:= "MATHEMATICS_PSAT_10"]
-Colorado_Data_LONG_PSAT_SAT_2021[CONTENT_AREA=="MAT" & GRADE==11, CONTENT_AREA:= "MATHEMATICS_SAT"]
+Colorado_Data_LONG_PSAT_SAT_2021[, CONTENT_AREA := fcase(
+                                    CONTENT_AREA == "ELA" & GRADE == 9, "ELA_PSAT_9",
+                                    CONTENT_AREA == "ELA" & GRADE == 10, "ELA_PSAT_10",
+                                    CONTENT_AREA == "ELA" & GRADE == 11, "ELA_SAT",
+                                    CONTENT_AREA == "MAT" & GRADE == 9, "MATHEMATICS_PSAT_9",
+                                    CONTENT_AREA == "MAT" & GRADE == 10, "MATHEMATICS_PSAT_10",
+                                    CONTENT_AREA == "MAT" & GRADE == 11, "MATHEMATICS_SAT")]
+
+#   Convert SCALE_SCORE variable to numeric
+Colorado_Data_LONG_PSAT_SAT_2021[, SCALE_SCORE := as.numeric(SCALE_SCORE)]
 
 #   Convert names to factors (temporary to change levels vs values for time/memory saving)
-Colorado_Data_LONG_PSAT_SAT_2021[, DISTRICT_NAME:=factor(DISTRICT_NAME)]
-Colorado_Data_LONG_PSAT_SAT_2021[, SCHOOL_NAME:=factor(SCHOOL_NAME)]
-Colorado_Data_LONG_PSAT_SAT_2021[, FIRST_NAME:=factor(FIRST_NAME)]
-Colorado_Data_LONG_PSAT_SAT_2021[, LAST_NAME:=factor(LAST_NAME)]
+Colorado_Data_LONG_PSAT_SAT_2021[, DISTRICT_NAME := factor(DISTRICT_NAME)]
+Colorado_Data_LONG_PSAT_SAT_2021[, SCHOOL_NAME := factor(SCHOOL_NAME)]
+Colorado_Data_LONG_PSAT_SAT_2021[, FIRST_NAME := factor(FIRST_NAME)]
+Colorado_Data_LONG_PSAT_SAT_2021[, LAST_NAME := factor(LAST_NAME)]
 
 #   Clean up LAST_NAME and FIRST_NAME
 setattr(Colorado_Data_LONG_PSAT_SAT_2021$LAST_NAME, "levels", sapply(levels(Colorado_Data_LONG_PSAT_SAT_2021$LAST_NAME), SGP::capwords))
@@ -115,10 +124,11 @@ setattr(Colorado_Data_LONG_PSAT_SAT_2021$FIRST_NAME, "levels", sapply(levels(Col
 new.sch.levs <- toupper(levels(Colorado_Data_LONG_PSAT_SAT_2021$SCHOOL_NAME))
 new.sch.levs <- gsub("/", " / ", new.sch.levs)
 
-new.sch.levs <- sapply(new.sch.levs, SGP::capwords, special.words = c('AIM', 'AXL', 'CCH', 'CMS', 'DC', 'DCIS', 'DSST', 'DSST:', 'ECE-8', 'GVR', 'IB', 'KIPP', 'PK', 'PK-8', 'PK-12', 'PSD', 'LEAP', 'MHCD', 'STEM', 'TCA', 'VSSA', 'PSD', 'GOAL', 'EDCSD', 'COVA', 'GES'), USE.NAMES=FALSE)
+new.sch.levs <- sapply(new.sch.levs, SGP::capwords, special.words = c('AIM', 'AXL', 'CCH', 'CMS', 'DC', 'DCIS', 'DSST', 'DSST:', 'ECE-8', 'GVR', 'IB', 'KIPP', 'PK', 'PK-8', 'PK-12', 'PSD', 'LEAP', 'MHCD', 'STEM', 'TCA', 'VSSA'), USE.NAMES=FALSE)
 new.sch.levs <- gsub(" / ", "/", new.sch.levs)
+new.sch.levs <- gsub("''", "'", new.sch.levs)
 new.sch.levs <- gsub("Prek", "PreK", new.sch.levs)
-new.sch.levs <- gsub("Jeffco", ", 'JeffCo'", new.sch.levs)
+new.sch.levs <- gsub("Pk-8", "PK-8", new.sch.levs)
 new.sch.levs <- gsub("Mcauliffe", "McAuliffe", new.sch.levs)
 new.sch.levs <- gsub("Mcglone", "McGlone", new.sch.levs)
 new.sch.levs <- gsub("Mcgraw", "McGraw", new.sch.levs)
@@ -130,6 +140,7 @@ new.sch.levs <- gsub("Mc Ginnis", "McGinnis", new.sch.levs)
 new.sch.levs <- gsub("Achieve Online", "ACHIEVE Online", new.sch.levs)
 setattr(Colorado_Data_LONG_PSAT_SAT_2021$SCHOOL_NAME, "levels", new.sch.levs)
 
+###  Districts
 grep("J", levels(Colorado_Data_LONG_PSAT_SAT_2021$DISTRICT_NAME), value=T)
 new.dst.levs <- toupper(levels(Colorado_Data_LONG_PSAT_SAT_2021$DISTRICT_NAME))
 new.dst.levs <- gsub("/", " / ", new.dst.levs)
@@ -155,18 +166,11 @@ table(Colorado_Data_LONG_PSAT_SAT_2021[, ACHIEVEMENT_LEVEL, VALID_CASE])
 # Colorado_Data_LONG_PSAT_SAT_2021[which(duplicated(Colorado_Data_LONG_PSAT_SAT_2021, by=key(Colorado_Data_LONG_PSAT_SAT_2021))), VALID_CASE:="INVALID_CASE"]
 
 ## Save 2021 PSAT_SAT Data
-save(Colorado_Data_LONG_PSAT_SAT_2021, file="Data/Colorado_Data_LONG_PSAT_SAT_2021.Rdata")
+# save(Colorado_Data_LONG_PSAT_SAT_2021, file="Data/Colorado_Data_LONG_PSAT_SAT_2021.Rdata")
 
 
-###   Run CMAS and P/SAT seperately -- Not needed:
+###   Combine CMAS and P/SAT data objects and save
+Colorado_Data_LONG_2021 <- rbindlist(list(Colorado_Data_LONG_CMAS_2021, Colorado_Data_LONG_PSAT_SAT_2021), fill=TRUE)
 
-## rbind CMAS and PSAT_SAT data and save
-# Colorado_Data_LONG_2021 <- rbindlist(list(Colorado_Data_LONG_CMAS_2021, Colorado_Data_LONG_PSAT_SAT_2021), fill=TRUE)
-#
-## Final tidying up
-#
-# Colorado_Data_LONG_2021[,SCALE_SCORE:=as.numeric(SCALE_SCORE)]
-#
-#
-# setkey(Colorado_Data_LONG_2021, VALID_CASE, CONTENT_AREA, YEAR, GRADE, ID)
-# save(Colorado_Data_LONG_2021, file="Data/Colorado_Data_LONG_2021.Rdata")
+setkey(Colorado_Data_LONG_2021, VALID_CASE, CONTENT_AREA, YEAR, GRADE, ID)
+save(Colorado_Data_LONG_2021, file="Data/Colorado_Data_LONG_2021.Rdata")
