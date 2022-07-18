@@ -35,7 +35,7 @@ MATHEMATICS_PSAT_10_2022.config <- list(
 
 MATHEMATICS_SAT_2022.config <- list(
   MATHEMATICS_SAT_2022 = list(
-    sgp.content.areas = c("MATHEMATICS_PSAT_9", "MATHEMATICS_SAT"),
+    sgp.content.areas = c("MATHEMATICS_PSAT_10", "MATHEMATICS_SAT"),
     sgp.panel.years = c("2021", "2022"),
     sgp.grade.sequences = list(c("10", "11")))
 )

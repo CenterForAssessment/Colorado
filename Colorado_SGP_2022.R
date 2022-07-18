@@ -34,7 +34,7 @@ setnames(Colorado_SGP@Data,
 sgps.2019 <- grep(".2019.BASELINE", names(Colorado_SGP@SGP[["SGPercentiles"]]))
 names(Colorado_SGP@SGP[["SGPercentiles"]])[sgps.2019] <-
     gsub(".2019.BASELINE",
-         ".2019.SKIP_YEAR_BASELINE",
+         ".2019.SKIP_YEAR_BLINE",
          names(Colorado_SGP@SGP[["SGPercentiles"]])[sgps.2019])
 
 
@@ -56,9 +56,9 @@ CO_Baseline_Config_2019 <- c(
 
 ###   Parallel Config
 parallel.config <- list(BACKEND = "PARALLEL",
-                        WORKERS = list(,
-                            BASELINE_PERCENTILES = 8,
-                            PROJECTIONS = 4, LAGGED_PROJECTIONS = 4))
+                        WORKERS = list(
+                            BASELINE_PERCENTILES = 12,
+                            PROJECTIONS = 6, LAGGED_PROJECTIONS = 4))
 
 ###   Run abcSGP analysis
 Colorado_SGP <-
@@ -75,6 +75,15 @@ Colorado_SGP <-
            simulate.sgps = FALSE,
            parallel.config = parallel.config)
 
+##  Changed renaming of results above from '.2019.SKIP_YEAR_BASELINE' to .2019.SKIP_YEAR_BLINE
+# table(Colorado_SGP@Data[YEAR == "2019" & is.na(SGP) & !is.na(SGP_BASELINE),
+#                           as.character(SGP_NORM_GROUP_BASELINE)])
+
+# table(Colorado_SGP@Data[YEAR == "2019" & is.na(SGP) & !is.na(SGP_BASELINE),
+#                           SGP_BASELINE == SGP_BASELINE_SKIP_YEAR])
+
+# Colorado_SGP@Data[YEAR == "2019" & is.na(SGP) & !is.na(SGP_BASELINE),
+#                     SGP_BASELINE := NA]
 
 #####
 ###   PART B -- 2022 Cohort and Baseline SGP Analyses
@@ -89,22 +98,21 @@ source("SGP_CONFIG/2022/PART_B/MATHEMATICS.R")
 
 CO_Config_2022 <- c(
   ELA_2022.config,
-#   ELA_PSAT_9_2022.config,
-#   ELA_PSAT_10_2022.config,
-#   ELA_SAT_2022.config,
+  ELA_PSAT_9_2022.config,
+  ELA_PSAT_10_2022.config,
+  ELA_SAT_2022.config,
 
-  MATHEMATICS_2022.config#,
-#   MATHEMATICS_PSAT_9_2022.config,
-#   MATHEMATICS_PSAT_10_2022.config,
-#   MATHEMATICS_SAT_2022.config
+  MATHEMATICS_2022.config,
+  MATHEMATICS_PSAT_9_2022.config,
+  MATHEMATICS_PSAT_10_2022.config,
+  MATHEMATICS_SAT_2022.config
 )
 
 ###   Parallel Config
 parallel.config <- list(BACKEND = "PARALLEL",
                         WORKERS = list(
-                            PERCENTILES = 8, BASELINE_PERCENTILES = 8,
-                            PROJECTIONS = 4, LAGGED_PROJECTIONS = 4,
-                            SGP_SCALE_SCORE_TARGETS = 4))
+                            PERCENTILES = 12, BASELINE_PERCENTILES = 12,
+                            PROJECTIONS = 6, LAGGED_PROJECTIONS = 4))
 
 ###   Run updateSGP analysis
 Colorado_SGP <-
@@ -115,11 +123,11 @@ Colorado_SGP <-
             sgp.config = CO_Config_2022,
             sgp.percentiles = TRUE,
             sgp.projections = FALSE,  #  Only Baselines due to checkered priors
-            sgp.projections.lagged = FALSE,  #  Check again when PSAT/SAT data is available
+            sgp.projections.lagged = FALSE,
             sgp.percentiles.baseline = TRUE,
             sgp.projections.baseline = TRUE,
             sgp.projections.lagged.baseline = TRUE,
-            sgp.target.scale.scores = TRUE,
+            sgp.target.scale.scores = FALSE, ## Fails due to checkered priors
             outputSGP.output.type = c("LONG_Data", "LONG_FINAL_YEAR_Data"),
             save.intermediate.results = FALSE,
             parallel.config = parallel.config)
@@ -127,4 +135,4 @@ Colorado_SGP <-
 ###   Save results
 
 ##    Don't save until PSAT/SAT data is available
-# save(Colorado_SGP, file = "Data/Colorado_SGP.Rdata")
+save(Colorado_SGP, file = "Data/Colorado_SGP.Rdata")
