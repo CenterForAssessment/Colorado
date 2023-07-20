@@ -25,9 +25,6 @@ MATHEMATICS_PSAT_9_2023.config <- list(
         sgp.panel.years = c("2022", "2023"),
         sgp.grade.sequences = list(c("8", "9"))
     )
-        # sgp.content.areas = c("MATHEMATICS", "MATHEMATICS", "MATHEMATICS_PSAT_9"),
-        # sgp.panel.years = c("2021", "2022", "2023"),
-        # sgp.grade.sequences = list(c("7", "8", "9")))
 )
 
 MATHEMATICS_PSAT_10_2023.config <- list(

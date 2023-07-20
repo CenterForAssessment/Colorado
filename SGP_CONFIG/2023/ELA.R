@@ -19,9 +19,9 @@ ELA_2023.config <- list(
 
 ###    PSAT/SAT ELA
 
-ELA_PSAT_9_2023.config <- list( # NOT RUN - no ELA grade 8
+ELA_PSAT_9_2023.config <- list(
     ELA_PSAT_9_2023 = list(
-        sgp.content.areas = c("ELA", "ELA_PSAT_9"),
+        sgp.content.areas = c("ELA", "ELA", "ELA_PSAT_9"),
         sgp.panel.years = c("2021", "2022", "2023"),
         sgp.grade.sequences = list(c("7", "8", "9"))
     )
@@ -29,9 +29,9 @@ ELA_PSAT_9_2023.config <- list( # NOT RUN - no ELA grade 8
 
 ELA_PSAT_10_2023.config <- list(
     ELA_PSAT_10_2023 = list(
-        sgp.content.areas = c("ELA", "ELA_PSAT_9", "ELA_PSAT_10"),
-        sgp.panel.years = c("2021", "2022", "2023"),
-        sgp.grade.sequences = list(c("8", "9", "10"))
+        sgp.content.areas = c("ELA_PSAT_9", "ELA_PSAT_10"),
+        sgp.panel.years = c("2022", "2023"),
+        sgp.grade.sequences = list(c("9", "10"))
     )
 )
 
