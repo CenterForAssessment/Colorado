@@ -41,8 +41,8 @@ parallel.config <-
     list(
         BACKEND = "PARALLEL",
         WORKERS = list(
-            PERCENTILES = 12, BASELINE_PERCENTILES = 12,
-            PROJECTIONS = 12, LAGGED_PROJECTIONS = 12)
+            PERCENTILES = 10, BASELINE_PERCENTILES = 10,
+            PROJECTIONS = 8, LAGGED_PROJECTIONS = 8)
     )
 
 ###   Run updateSGP analysis
@@ -50,8 +50,8 @@ Colorado_SGP <-
     updateSGP(
         what_sgp_object = Colorado_SGP,
         with_sgp_data_LONG = Colorado_CMAS_Data_2023,
-        years = "2023",
-        steps = c("prepareSGP", "analyzeSGP", "combineSGP", "outputSGP"),
+        # years = "2023",
+        steps = c("prepareSGP", "analyzeSGP", "combineSGP"), # "outputSGP"),
         sgp.config = CO_Config_2023,
         sgp.percentiles = TRUE,
         sgp.projections = TRUE,
@@ -60,7 +60,7 @@ Colorado_SGP <-
         sgp.projections.baseline = FALSE,
         sgp.projections.lagged.baseline = FALSE,
         sgp.target.scale.scores = TRUE,
-        outputSGP.output.type = "LONG_Data", # for verification & ISRs
+        # outputSGP.output.type = "LONG_Data", # for verification & ISRs
         save.intermediate.results = FALSE,
         parallel.config = parallel.config
     )
@@ -75,7 +75,7 @@ load("Data/Colorado_PSAT_Data_2023.Rdata")
 
 ###   Combine P/SAT SGP configuration scripts
 CO_Config_2023 <- c(
-    ELA_PSAT_9_2023.config,
+    # ELA_PSAT_9_2023.config,
     ELA_PSAT_10_2023.config,
     ELA_SAT_2023.config,
 
@@ -89,7 +89,9 @@ Colorado_SGP <-
     updateSGP(
         what_sgp_object = Colorado_SGP,
         with_sgp_data_LONG = Colorado_PSAT_Data_2023,
-        years = "2023",
+        overwrite.existing.data = FALSE,
+        # output.updated.data = FALSE,
+        # years = "2023",
         steps = c("prepareSGP", "analyzeSGP", "combineSGP", "outputSGP"),
         sgp.config = CO_Config_2023,
         sgp.percentiles = TRUE,
