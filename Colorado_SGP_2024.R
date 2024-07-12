@@ -46,7 +46,7 @@ Colorado_SGP <-
     updateSGP(
         what_sgp_object = Colorado_SGP,
         with_sgp_data_LONG = Colorado_CMAS_Data_2024,
-        steps = c("prepareSGP", "analyzeSGP", "combineSGP", "outputSGP"),
+        steps = c("prepareSGP", "analyzeSGP", "combineSGP"), # "outputSGP"),
         sgp.config = CO_Config_2024,
         sgp.percentiles = TRUE,
         sgp.projections = TRUE,
@@ -60,6 +60,21 @@ Colorado_SGP <-
         parallel.config = parallel.config
     )
 
+###   Add R session Info & Save results (`cfaDocs` version 0.0-1.12 or later)
+source(
+    system.file(
+        "rmarkdown", "shared_resources", "rmd", "R_Session_Info.R",
+        package = "cfaDocs"
+    )
+)
+
+Colorado_SGP@Version$session_platform <- list("2024" = session_platform)
+Colorado_SGP@Version$attached_pkgs    <- list("2024" = attached_pkgs)
+Colorado_SGP@Version$namespace_pkgs   <- list("2024" = namespace_pkgs)
+
+###   Save results with all CMAS and PSAT/SAT results
+save(Colorado_SGP, file = "Data/Colorado_SGP.Rdata")
+
 
 #####
 ###   2024 PSAT/SAT SGP Analyses
@@ -70,7 +85,7 @@ load("Data/Colorado_PSAT_Data_2024.Rdata")
 
 ###   Combine P/SAT SGP configuration scripts
 CO_Config_2024 <- c(
-    # ELA_PSAT_9_2024.config,
+    ELA_PSAT_9_2024.config,
     ELA_PSAT_10_2024.config,
     ELA_SAT_2024.config,
 
@@ -85,8 +100,6 @@ Colorado_SGP <-
         what_sgp_object = Colorado_SGP,
         with_sgp_data_LONG = Colorado_PSAT_Data_2024,
         overwrite.existing.data = FALSE,
-        # output.updated.data = FALSE,
-        # years = "2024",
         steps = c("prepareSGP", "analyzeSGP", "combineSGP", "outputSGP"),
         sgp.config = CO_Config_2024,
         sgp.percentiles = TRUE,
@@ -109,8 +122,8 @@ source(
     )
 )
 Colorado_SGP@Version$session_platform <- list("2024" = session_platform)
-Colorado_SGP@Version$attached_pkgs <- list("2024" = attached_pkgs)
-Colorado_SGP@Version$namespace_pkgs<-  list("2024" = namespace_pkgs)
+Colorado_SGP@Version$attached_pkgs    <- list("2024" = attached_pkgs)
+Colorado_SGP@Version$namespace_pkgs   <- list("2024" = namespace_pkgs)
 
 ###   Save results with all CMAS and PSAT/SAT results
 save(Colorado_SGP, file = "Data/Colorado_SGP.Rdata")

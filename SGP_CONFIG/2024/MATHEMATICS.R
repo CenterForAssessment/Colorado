@@ -22,18 +22,19 @@ MATHEMATICS_2024.config <- list(
 ##  CMAS data for Math PSAT 9 ONLY (not ELA or PSAT 10)
 MATHEMATICS_PSAT_9_2024.config <- list(
     MATHEMATICS_PSAT_9_2024 = list(
-        sgp.content.areas = c("MATHEMATICS", "MATHEMATICS_PSAT_9"),
-        sgp.panel.years = c("2023", "2024"),
-        sgp.grade.sequences = list(c("8", "9"))
+        sgp.content.areas =
+            c("MATHEMATICS", "MATHEMATICS", "MATHEMATICS_PSAT_9"),
+        sgp.panel.years = c("2022", "2023", "2024"),
+        sgp.grade.sequences = list(c("7", "8", "9"))
     )
 )
 
 MATHEMATICS_PSAT_10_2024.config <- list(
     MATHEMATICS_PSAT_10_2024 = list(
         sgp.content.areas =
-            c("MATHEMATICS_PSAT_9", "MATHEMATICS_PSAT_10"),
-        sgp.panel.years = c("2023", "2024"),
-        sgp.grade.sequences = list(c("9", "10"))
+            c("MATHEMATICS", "MATHEMATICS_PSAT_9", "MATHEMATICS_PSAT_10"),
+        sgp.panel.years = c("2022", "2023", "2024"),
+        sgp.grade.sequences = list(c("8", "9", "10"))
     )
 )
 

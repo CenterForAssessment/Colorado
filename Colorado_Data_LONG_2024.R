@@ -106,7 +106,7 @@ save(Colorado_CMAS_Data_2024, file = "Data/Colorado_CMAS_Data_2024.Rdata")
 
 Colorado_PSAT_Data_2024 <-
     fread(
-        file = "Data/Base_Files/SAT_GRO_READIN_2024_20240717.txt",
+        file = "Data/Base_Files/SAT_GRO_READIN_2024_20240708.txt",
         colClasses = rep("character", 26), quote = "'"
     )
 
