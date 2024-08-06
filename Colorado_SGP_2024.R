@@ -85,7 +85,7 @@ load("Data/Colorado_PSAT_Data_2024.Rdata")
 
 ###   Combine P/SAT SGP configuration scripts
 CO_Config_2024 <- c(
-    ELA_PSAT_9_2024.config,
+    # ELA_PSAT_9_2024.config,
     ELA_PSAT_10_2024.config,
     ELA_SAT_2024.config,
 
