@@ -1,9 +1,34 @@
+#+ include = FALSE, purl = FALSE, eval = FALSE
 ###############################################################################
 ###                                                                         ###
 ###           Prep CMAS/PSAT/SAT data for 2024 Colorado LONG data           ###
 ###                                                                         ###
 ###############################################################################
 
+#' ## Data Preparation
+#'
+#' The data preparation step involves taking data provided by the CDE and
+#' producing a `.Rdata` file that will subsequently be analyzed using the `SGP`
+#' software. This process is carried out annually as new data becomes available
+#' from the Colorado `r params$test.abv` assessment program.
+#'
+#' The data received from CDE is pre-processed and requires minimal formatting
+#' prior to running SGP analyses. For the `r params$report.year` `r params$test.abv`
+#' data preparation and cleaning, we ensure that all data fields have been read
+#' in as the correct type (e.g., scale scores are `numeric` values) and format
+#' demographic and student information to match values used in the historical
+#' data set. All variable names were confirmed to conform to the `SGP` required
+#' package conventions.
+#'
+#' Invalid records were identified based on the following criteria:
+#'
+#' * Students with duplicate records. In these instances, a student's highest
+#'   scale score is retained as the "valid" case in the analyses.
+#' * Cases with missing student identifiers.
+#' * Cases with missing scale scores.
+
+
+#+ include = FALSE, purl = FALSE, eval = FALSE
 ### Load Packages
 require(data.table)
 
@@ -191,16 +216,3 @@ table(dups$VALID_CASE) # 0 (valid) duplicates in 2024
 
 ###   Save 2024 PSAT_SAT Data
 save(Colorado_PSAT_Data_2024, file="Data/Colorado_PSAT_Data_2024.Rdata")
-
-###   Combine CMAS and P/SAT data objects and save
-# Colorado_Data_LONG_2024 <-
-#     rbindlist(
-#         list(
-#             Colorado_CMAS_Data_2024,
-#             Colorado_PSAT_Data_2024
-#         ),
-#         fill = TRUE
-#     )
-
-# setkey(Colorado_Data_LONG_2024, VALID_CASE, CONTENT_AREA, YEAR, GRADE, ID)
-# save(Colorado_Data_LONG_2024, file = "Data/Colorado_Data_LONG_2024.Rdata")
