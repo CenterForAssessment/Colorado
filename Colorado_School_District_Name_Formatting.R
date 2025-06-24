@@ -8,19 +8,28 @@
 new.sch.levs <- gsub("/", " / ", new.sch.levs)
 
 sch.specials <-
-  c("AIM", "APS", "AUL", "AXIS", "AXL", "CCH", "CEC", "CIVICA",
-    "CMS", "COVA", "CUBE", "DC", "DCIS", "DSST", "DSST:", "ECE-8",
+  c("AIM", "APS", "AUL", "AXIS", "AXL", "BOCES", "CCH", "CEC", "CIVICA",
+    "CMS", "(CMS)", "COVA", "CUBE", "DC", "DCIS", "DSST", "DSST:", "ECE-8",
     "GES", "GOAL", "GVR", "IB", "KIPP", "PK", "PK-8", "PK-12",
-    "PSD", "LEAP", "MHCD", "MS", "SHS", "STEM", "TCA", "VSSA")
+    "PSD", "LEAP", "MHCD", "MS", "SHS", "STEM", "TCA", "VSSA", "(VSSA)")
 
 new.sch.levs <- sapply(X = new.sch.levs, USE.NAMES = FALSE,
                        FUN = SGP::capwords, special.words = sch.specials)
 
 new.sch.levs <- gsub(" / ", "/", new.sch.levs)
 new.sch.levs <- gsub("''", "'", new.sch.levs)
+new.sch.levs <- gsub("- ", " - ", new.sch.levs)
+new.sch.levs <- gsub("-  ", "- ", new.sch.levs)
 new.sch.levs <- gsub("[']S", "'s", new.sch.levs)
 new.sch.levs <- gsub("Prek", "PreK", new.sch.levs)
 new.sch.levs <- gsub("Pk-8", "PK-8", new.sch.levs)
+new.sch.levs <- gsub("Ece-8", "ECE-8", new.sch.levs)
+new.sch.levs <- gsub("Jr Sr", "Jr/Sr", new.sch.levs)
+# grep("[(]*?[)]", new.sch.levs, value = TRUE)
+new.sch.levs <- gsub("[(]bill[)]", "(Bill)", new.sch.levs)
+new.sch.levs <- gsub("[(]high[)]", "(High)", new.sch.levs)
+new.sch.levs <- gsub("[(]middle[)]", "(Middle)", new.sch.levs)
+new.sch.levs <- gsub("[(]elementary[)]", "(Elementary)", new.sch.levs)
 
 sort(grep("Mc", new.sch.levs, value = TRUE))
 new.sch.levs <- gsub("Mc Auliffe", "McAuliffe", new.sch.levs)
@@ -53,12 +62,15 @@ new.sch.levs <- gsub("Soar A", "SOAR A", new.sch.levs)
 new.sch.levs <- gsub("Strive Prep", "STRIVE Prep", new.sch.levs)
 new.sch.levs <- gsub("Edcsd", "eDCSD", new.sch.levs)
 new.sch.levs <- gsub("^Aul ", "AUL ", new.sch.levs)
+new.sch.levs <- gsub("\"spectra Centers, Inc \"", "Spectra Centers Inc", new.sch.levs)
 
-grep("[[:digit:]]", new.sch.levs, value = TRUE)
+grep("Re-", new.sch.levs, value = TRUE)
 grep("[[:digit:]]j", new.sch.levs, value = TRUE)
+new.sch.levs <- gsub("3j", "3J", new.sch.levs)
 new.sch.levs <- gsub("27j", "27J", new.sch.levs)
 new.sch.levs <- gsub("49jt", "49JT", new.sch.levs)
 new.sch.levs <- gsub("ADAMS12", "Adams 12", new.sch.levs)
+new.dst.levs <- gsub("Re-", "RE-", new.dst.levs)
 
 
 ###  Districts
@@ -69,18 +81,29 @@ dst.specials <-
     c("1J", "2J", "3J", "4A", "4J", "5J", "6J", "10J", "10JT",
       "11J", "13JT", "22J", "26J", "27J", "28J", "29J", "31J",
       "32J", "33J", "49JT", "50J", "50JT", "60JT", "100J",
-      "JT", "RJ", "RD", "RE", "RE1J")
+      "BOCES", "JT", "RJ", "RD", "RE", "RE1J")
 
 new.dst.levs <- sapply(X = new.dst.levs, USE.NAMES = FALSE,
                        FUN = SGP::capwords, special.words = dst.specials)
+# grep("[(]j[)]", new.dst.levs, value = TRUE)
+new.dst.levs <- gsub("[(]j[)]", "J", new.dst.levs)
 new.dst.levs <- gsub("[(]J[)]", "J", new.dst.levs)
 new.dst.levs <- gsub("Re-", "RE-", new.dst.levs)
-# new.dst.levs <- gsub("RE [[:digit:]]", "RE-", new.dst.levs)
 new.dst.levs <- gsub("RE-1-J", "RE-1J", new.dst.levs)
+new.dst.levs <- gsub("RE-1-J", "RE-1J", new.dst.levs)
+# grep("Re[:] No|RE No", new.dst.levs, value = TRUE)
+new.dst.levs <- gsub("Re[:] No |RE No ", "RE-", new.dst.levs)
 new.dst.levs <- gsub(" Jt", "JT", new.dst.levs)
 new.dst.levs <- gsub(" JT", "-JT", new.dst.levs)
 new.dst.levs <- gsub(" / ", "/", new.dst.levs)
-new.dst.levs <- gsub("--", "- ", new.dst.levs)
+new.dst.levs <- gsub("--", "-", new.dst.levs)
 new.dst.levs <- gsub(" - ", "-", new.dst.levs)
-new.dst.levs <- gsub("Mc Clave", "McClave", new.dst.levs)
+new.dst.levs <- gsub("- ", "-", new.dst.levs)
+new.dst.levs <- gsub("Mc Clave|Mcclave", "McClave", new.dst.levs)
+new.dst.levs <- gsub("Adams- ", "Adams - ", new.dst.levs)
+
+grep("Re ", new.dst.levs, value = TRUE)
+# new.dst.levs <- gsub("R- ", "R-", new.dst.levs)
+new.dst.levs <- gsub("RE ", "RE-", new.dst.levs)
+new.dst.levs <- gsub("Re ", "RE-", new.dst.levs)
 grep("j", new.dst.levs, value = TRUE) # Should only leave * Conejos
