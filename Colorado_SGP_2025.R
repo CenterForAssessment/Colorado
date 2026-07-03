@@ -17,9 +17,9 @@ load("Data/Colorado_CMAS_Data_2025.Rdata")
 load("Data/Colorado_PSAT_Data_2025.Rdata")
 
 # ###   Read in SGP configuration scripts and combine
-# source("SGP_CONFIG/2025/ELA.R")
-# source("SGP_CONFIG/2025/MATHEMATICS.R")
-# source("SGP_CONFIG/2025/CO_Proj_Sequences_2025.R")
+source("SGP_CONFIG/2025/ELA.R")
+source("SGP_CONFIG/2025/MATHEMATICS.R")
+source("SGP_CONFIG/CO_Proj_Sequences.R")
 
 CO_Config_2025 <- c(
     ELA_2025.config,
@@ -104,22 +104,22 @@ save(Colorado_SGP, file = "Data/Colorado_SGP.Rdata")
 #' associated with the data analysis. Documentation for all SGP functions are
 #' [available online.](https://cran.r-project.org/web/packages/SGP/SGP.pdf)
 #' 
-#' We use the [`updateSGP`](https://www.rdocumentation.org/packages/SGP/versions/2.0-1.0/topics/updateSGP)
+#' We use the [`updateSGP`](https://www.rdocumentation.org/packages/SGP/versions/2.2-0.0/topics/updateSGP)
 #' function to ***a)*** do the final preparation and addition of the cleaned and
 #' formatted new annual data,
-#' ([`prepareSGP`](https://www.rdocumentation.org/packages/SGP/versions/2.0-1.0/topics/prepareSGP)
+#' ([`prepareSGP`](https://www.rdocumentation.org/packages/SGP/versions/2.2-0.0/topics/prepareSGP)
 #' step), ***b)*** calculate SGP estimates
-#' ([`analyzeSGP`](https://www.rdocumentation.org/packages/SGP/versions/2.0-1.0/topics/analyzeSGP)
+#' ([`analyzeSGP`](https://www.rdocumentation.org/packages/SGP/versions/2.2-0.0/topics/analyzeSGP)
 #' step), ***c)*** merge the results into the master longitudinal data set
-#' ([`combineSGP`](https://www.rdocumentation.org/packages/SGP/versions/2.0-1.0/topics/combineSGP)
+#' ([`combineSGP`](https://www.rdocumentation.org/packages/SGP/versions/2.2-0.0/topics/combineSGP)
 #' step) and ***d)*** output a pipe delimited version of the complete long data
-#' ([`outputSGP`](https://www.rdocumentation.org/packages/SGP/versions/2.0-1.0/topics/outputSGP)
+#' ([`outputSGP`](https://www.rdocumentation.org/packages/SGP/versions/2.2-0.0/topics/outputSGP)
 #' step).
 #' 
 #' #### Visualize results
 #' 
 #' Once all analyses were completed via `updateSGP`, individual student growth
-#' reports were produced using the [`visualizeSGP`](https://www.rdocumentation.org/packages/SGP/versions/2.0-1.0/topics/visualizeSGP)
+#' reports were produced using the [`visualizeSGP`](https://www.rdocumentation.org/packages/SGP/versions/2.2-0.0/topics/visualizeSGP)
 #' function and a custom template designed for Colorado. English and Spanish
 #' language versions of these reports were created, and the individual reports
 #' and school level catalogs were bundled according to CDE specifications.
