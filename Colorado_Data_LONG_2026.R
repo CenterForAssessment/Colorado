@@ -194,7 +194,8 @@ setattr(Colorado_PSAT_Data_2026$DISTRICT_NAME, "levels", new.dst.levs)
 Colorado_PSAT_Data_2026 <-
   SGP:::getAchievementLevel(Colorado_PSAT_Data_2026, state = "CO")
 Colorado_PSAT_Data_2026[
-    ACHIEVEMENT_LEVEL == "NA", ACHIEVEMENT_LEVEL := "No Score"
+    ACHIEVEMENT_LEVEL %in% c("NA", "0011", "0012", "0013", "UUUU"),
+      ACHIEVEMENT_LEVEL := "No Score"
 ]
 table(Colorado_PSAT_Data_2026[, ACHIEVEMENT_LEVEL, VALID_CASE])
 
