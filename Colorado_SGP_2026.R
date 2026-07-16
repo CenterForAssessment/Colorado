@@ -19,11 +19,11 @@ load("Data/Colorado_PSAT_Data_2026.Rdata")
 ###   Read in SGP configuration scripts and combine
 source("SGP_CONFIG/2026/ELA.R")
 source("SGP_CONFIG/2026/MATHEMATICS.R")
-source("SGP_CONFIG/CO_Proj_Sequences.R")
+source("SGP_CONFIG/2026/CO_Proj_Sequences.R")
 
 CO_Config_2026 <- c(
     ELA_2026.config,
-    ELA_PSAT_9_2026.config,
+    # ELA_PSAT_9_2026.config,
     ELA_PSAT_10_2026.config,
     ELA_SAT_2026.config,
 
