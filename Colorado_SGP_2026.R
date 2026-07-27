@@ -1,5 +1,5 @@
 #+ include = FALSE, purl = FALSE, eval = FALSE
-##############################################################################
+###########################################################################u###
 ###                                                                        ###
 ###              Colorado 2026 CMAS and PSAT-SAT SGP analyses              ###
 ###                                                                        ###
@@ -11,6 +11,13 @@ require(data.table)
 
 ###   Load 2025 growth data and results
 load("Data/Colorado_SGP.Rdata")
+
+##    Clean up ACHIEVEMENT_LEVEL from 2025
+Colorado_SGP@Data[
+    ACHIEVEMENT_LEVEL %in% c("NA", "0011", "0012", "0013", "0014", "UUUU"),
+      ACHIEVEMENT_LEVEL := "No Score"
+]
+table(Colorado_SGP@Data[, .(YEAR, GRADE), ACHIEVEMENT_LEVEL])
 
 ###   Load current year, formatted data
 load("Data/Colorado_CMAS_Data_2026.Rdata")
